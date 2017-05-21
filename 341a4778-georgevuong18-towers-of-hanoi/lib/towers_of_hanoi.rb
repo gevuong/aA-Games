@@ -40,5 +40,29 @@
 # methods named above.
 
 class TowersOfHanoi
+  attr_reader :towers, :disc
+
+  def initialize(towers = [[3, 2, 1], [], []])
+    @towers = towers
+  end
+
+  def move(from_tower, to_tower)
+    @disc = @towers[from_tower].pop
+    @towers[to_tower].push(disc)
+  end
+
+  def valid_move?(from_tower, to_tower)
+    if @towers[from_tower].empty?
+      return false # not a valid move if from_tower is empty
+    elsif @towers[to_tower].empty?
+      return true # always a valid move if to_tower is empty
+    elsif @disc > @towers[to_tower].last
+      return false # not a valid move if disc being moved from_tower is larger than than the last disc in_tower
+    end
+  end
+
+  def won?
+    @towers[1].size == 3 || @towers[2].size == 3 ? true : false
+  end
 
 end
