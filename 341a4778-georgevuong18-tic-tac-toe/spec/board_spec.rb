@@ -15,7 +15,7 @@ describe "Board" do
     context "when passed a grid argument" do
       it "sets the board's grid to the value passed in" do
         grid = [[1, 2], [3, 4]]
-        board = Board.new(grid)
+        board = Board.new(grid) # object created
 
         expect(board.grid).to be(grid)
       end
