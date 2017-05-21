@@ -50,7 +50,7 @@ describe "HumanPlayer" do
     end
 
     it "should take an entry of the form '0, 0' and return a position" do
-      $stdin.string << "0, 0"
+      $stdin.string << "0, 0" # format of position, shoveled into $stdin, which is retrieved using Kernel#gets
 
       expect(human.get_move).to eq([0, 0])
     end
