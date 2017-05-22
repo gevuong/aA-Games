@@ -41,6 +41,8 @@ describe Code do
   end
 
   describe "#initialize" do
+    # error is never raised if pegs is initially set to object,
+    # i.e. initialize(pegs = []). If pegs was not set to anything, then pegs would require an array of pegs to be passed as an argument.
     it "requires an array of pegs to be passed as an argument" do
       expect { Code.new }.to raise_error(ArgumentError)
     end
