@@ -139,7 +139,7 @@ describe Game do
     let(:game) { Game.new }
 
     before(:each) do
-      # $stdin is a File object and File objects include Enumerables such as #each over inputs. 
+      # $stdin is a File object and File objects include Enumerables such as #each over inputs.
       $stdin = StringIO.new("bgry\n")
       $stdout = StringIO.new
     end
