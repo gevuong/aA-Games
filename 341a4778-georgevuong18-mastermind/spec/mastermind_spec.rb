@@ -117,6 +117,7 @@ describe Game do
 
   describe "#initialize" do
     context "when passed a secret code argument" do
+      # :game is an instance of class Code, and is created using Game.new(code)
       let(:game) { Game.new(code) }
 
       it "sets the secret code" do
@@ -138,6 +139,7 @@ describe Game do
     let(:game) { Game.new }
 
     before(:each) do
+      # $stdin is a File object and File objects include Enumerables such as #each over inputs. 
       $stdin = StringIO.new("bgry\n")
       $stdout = StringIO.new
     end
