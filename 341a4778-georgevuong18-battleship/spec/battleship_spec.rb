@@ -4,11 +4,12 @@ require "board"
 require "player"
 
 describe BattleshipGame do
+  # :two_ship_grid, :two_ship_board are instances of class Board
   let(:two_ship_grid) { [[:s, :s], [nil, nil]] }
   let(:two_ship_board) { Board.new(two_ship_grid) }
 
   let(:player) { double("player") }
-
+  # :game is instance of class BattleshipGame
   let(:game) { BattleshipGame.new(player, two_ship_board) }
 
   describe "#initialize" do

@@ -1,2 +1,54 @@
 class Board
+  attr_reader :grid
+
+  def initialize(grid = Board.default_grid)
+    # According to spec file, grid is equal to the argument passed in Board.new(arg).
+    @grid = grid
+  end
+
+  def Board.default_grid
+    Array.new(10) { Array.new(10) }
+  end
+
+  def count
+    # based on specs, ship is represented as ":s"
+    @grid.flatten.count(:s)
+  end
+
+  def empty?(pos = [])
+    # when pos is passed
+    if pos != []
+      if @grid[pos.first][pos.last] == nil
+        # if position is empty
+        true
+      elsif @grid[pos.first][pos.last] == :s
+        # if position is occupied
+        false
+      end
+
+    elsif pos == []
+      # when pos is not passed
+      if @grid.flatten.all? { |coord| coord == nil }
+        # if grid has no ships on board
+        true
+      elsif @grid.flatten.any? { |coord| coord == :s }
+        # if grid contains any ships on board
+        false
+      end
+    end
+  end
+
+  def full?
+    if @grid.flatten.all? { |pos| pos == :s }
+      true
+    else
+      false
+    end
+  end
+
+  def place_random_ship
+    raise "error" if @grid.flatten.all? { |pos| pos == :s }
+
+  end
+
 end
