@@ -47,8 +47,21 @@ class Board
   end
 
   def place_random_ship
+    # I can't fall instance method full? in @grid.full?...
     raise "error" if @grid.flatten.all? { |pos| pos == :s }
+    
+    if @grid.flatten.all? { |pos| pos == nil } # when board is empty
+      coord = [rand(0...@grid.length), rand(0...@grid.length)]
+      @grid[coord.first][coord.last] = :s
+    end
+  end
 
+  def won?
+    if @grid.flatten.all? { |pos| pos == nil } # if no ships remain
+      true
+    else # when at least one ship remains
+      false
+    end
   end
 
 end
