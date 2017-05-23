@@ -63,7 +63,7 @@ class Board
 
   def place_random_ship
     # I can't fall instance method full? in @grid.full?...
-    raise "error" if @grid.flatten.all? { |pos| pos == :s }
+    raise "error" if self.full? #flatten.all? { |pos| pos == :s }
 
     # return remaining positions that equal to nil, and select a random position within that grid
     main_pos_arr = []
