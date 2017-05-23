@@ -18,9 +18,11 @@ class BattleshipGame
   end
 
   def attack(pos)
-    row = pos[0]
-    col = pos[1]
-    @board.grid[row][col] = :x
+    #p @board.grid
+    # p row = pos[0]
+    # p col = pos[1]
+    # p @board.grid[]
+    @board[pos] = :x
   end
 
   def count
@@ -34,7 +36,7 @@ class BattleshipGame
 
   def play_turn
     pos = @player.get_play
-    @board.grid.attack(pos)
+    self.attack(pos)
   end
 
 end

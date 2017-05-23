@@ -44,6 +44,7 @@ describe BattleshipGame do
 
   describe "#play_turn" do
     it "gets a move from the player and makes an attack at that position" do
+      # :get play is a dummy method (or mock) within a dummy class Player, hence the allow()
       allow(player).to receive(:get_play).and_return([1, 1])
 
       expect(player).to receive(:get_play)

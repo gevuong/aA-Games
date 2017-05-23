@@ -6,6 +6,19 @@ class Board
     @grid = grid
   end
 
+  # hivemind
+  #@@name_of_queen vs @name
+
+  # bracket method: first arg is the accessor, second arg is what the bracket equals to.
+  def []=(pos, mark)
+    @grid[pos[0]][pos[1]] = mark
+  end
+
+  def [](pos)
+    @grid[pos[0]][pos[1]]
+  end
+
+
   def Board.default_grid
     Array.new(10) { Array.new(10) }
   end
@@ -52,10 +65,25 @@ class Board
     # I can't fall instance method full? in @grid.full?...
     raise "error" if @grid.flatten.all? { |pos| pos == :s }
 
-    if @grid.flatten.all? { |pos| pos == nil } # when board is empty
-      coord = [rand(0...@grid.length), rand(0...@grid.length)]
-      @grid[coord.first][coord.last] = :s
+    # return remaining positions that equal to nil, and select a random position within that grid
+    main_pos_arr = []
+    @grid.each_with_index do |row, idx|
+      row.each_with_index do |col, idx2|
+        if col == nil
+          main_pos_arr << [idx, idx2]
+        else
+          next
+        end
+      end
     end
+    main_pos_arr
+
+    sub_pos_arr = main_pos_arr.sample
+    @grid[sub_pos_arr.first][sub_pos_arr.last] = :s
+    # if @grid.flatten.any? { |pos| pos == nil } # when board is empty
+    #   coord = [rand(0...@grid.length), rand(0...@grid.length)]
+    #   @grid[coord.first][coord.last] = :s
+    # end
   end
 
   def won?

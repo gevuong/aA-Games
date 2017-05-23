@@ -1,5 +1,6 @@
 require "rspec"
 require "hangman"
+#require "dictionary.txt"
 
 describe "Phase I" do
   describe "ComputerPlayer" do
@@ -26,7 +27,7 @@ describe "Phase I" do
       end
 
       it "returns the indices of the found letters" do
-        expect(computer_player.check_guess("o")).to eq([1,2]) 
+        expect(computer_player.check_guess("o")).to eq([1,2])
       end
 
       it "handles an incorrect guess" do
