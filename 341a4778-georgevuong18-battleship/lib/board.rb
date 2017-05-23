@@ -16,12 +16,14 @@ class Board
   end
 
   def empty?(pos = [])
+    row = pos[0]
+    col = pos[1]
     # when pos is passed
     if pos != []
-      if @grid[pos.first][pos.last] == nil
+      if @grid[row][col] == nil
         # if position is empty
         true
-      elsif @grid[pos.first][pos.last] == :s
+      elsif @grid[row][col] == :s
         # if position is occupied
         false
       end
@@ -49,7 +51,7 @@ class Board
   def place_random_ship
     # I can't fall instance method full? in @grid.full?...
     raise "error" if @grid.flatten.all? { |pos| pos == :s }
-    
+
     if @grid.flatten.all? { |pos| pos == nil } # when board is empty
       coord = [rand(0...@grid.length), rand(0...@grid.length)]
       @grid[coord.first][coord.last] = :s

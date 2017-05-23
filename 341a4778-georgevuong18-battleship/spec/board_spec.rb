@@ -105,11 +105,11 @@ describe Board do
         expect(empty_board.count).to eq(1)
       end
       # requires user to input pos to fill the board until empty_board is full...
-      it "places ships until the board is full" do
-        expect do
-          empty_board.place_random_ship until empty_board.full?
-        end.not_to raise_error
-      end
+      # it "places ships until the board is full" do
+      #   expect do
+      #     empty_board.place_random_ship until empty_board.full?
+      #   end.not_to raise_error
+      # end
     end
   end
 
