@@ -37,6 +37,8 @@ describe "Phase I" do
   end
 
   describe "Hangman" do
+
+    # looks like :players is a hash that stores data within each symbol
     let(:players) do
       {
         referee: double(
@@ -89,6 +91,7 @@ describe "Phase I" do
     end
 
     describe "#setup" do
+      # mock method length,
       let(:length) { rand(5) }
 
       before(:each) do
