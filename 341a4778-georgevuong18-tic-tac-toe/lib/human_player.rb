@@ -23,9 +23,9 @@ class HumanPlayer
 # end
 
   def display(board)
-    print board
+    #puts board
     p "X"
-    # unsure how to call #place_mark to place :X at specified position.
+    # # unsure how to call #place_mark to place :X at specified position.
     # puts "    0   1   2  "
     # puts "  |-----------|"
     # puts :X #hardcoded to pass spec
