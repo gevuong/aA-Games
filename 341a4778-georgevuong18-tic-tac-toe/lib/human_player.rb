@@ -23,7 +23,7 @@ class HumanPlayer
 # end
 
   def display(board)
-    p board
+    print board
     p "X"
     # unsure how to call #place_mark to place :X at specified position.
     # puts "    0   1   2  "

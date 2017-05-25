@@ -27,7 +27,6 @@ class Board
   end
 
   def winner
-    #(@grid + @grid.transpose + diagonal)
     (@grid + @grid.transpose + diagonal).each do |idx|
       if idx == [:X, :X, :X]
         return :X
