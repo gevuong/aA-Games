@@ -5,9 +5,6 @@ class Board
   def initialize(grid = [])
     @grid = grid
     @grid = Array.new(3) { Array.new(3) } if grid.empty?
-    # [[nil, nil, nil]
-    #  [nil, nil, nil]
-    #  [nil, nil, nil]]
   end
 
   def place_mark(pos, mark)
@@ -15,32 +12,36 @@ class Board
   end
 
   def empty?(pos)
-    @grid[pos.first][pos.last] == nil # means square is not marked
+    @grid[pos.first][pos.last] == nil # means square is not marked, so returns true
+  end
+
+  def diagonal
+    left_diagonal = []
+    right_diagonal = []
+    (0...@grid.length).each do |idx|
+      left_diagonal << @grid[idx][idx]
+      right_diagonal << @grid[idx][2 - idx]
+    end
+    [left_diagonal, right_diagonal]
+
   end
 
   def winner
-    if @grid[0][0] == :X && @grid[1][1] == :X && @grid[2][2]
-      return :X
-    elsif @grid[0][2] == :X && @grid[1][1] == :X && @grid[2][0]
-      return :X
-    elsif @grid[0][0] == :X && @grid[0][1] == :X && @grid[0][2] # row
-      return :X
-    elsif @grid[0][2] == :O && @grid[1][2] == :O && @grid[2][2]
-      return :O
-    else
-      return nil
+    #(@grid + @grid.transpose + diagonal)
+    (@grid + @grid.transpose + diagonal).each do |idx|
+      if idx == [:X, :X, :X]
+        return :X
+      elsif idx == [:O, :O, :O]
+        return :O
+      end
     end
+
+    return nil
   end
 
   def over?
-    #@grid.flatten.none? { |pos| pos.nil? } || winner
-    if @grid.flatten.any? { |pos| pos == :X || pos == :O }
-      return false
-    elsif @grid.empty?
-      return false
-    elsif winner == :X || winner == :O # return winner
-      return true
-    end
+    # none? method returns true if block never returns a truthy value
+    return true if winner == :X || winner == :O || @grid.flatten.none? { |pos| pos == nil }
   end
 
 end
