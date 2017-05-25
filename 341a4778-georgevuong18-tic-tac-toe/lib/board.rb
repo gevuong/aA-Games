@@ -12,7 +12,7 @@ class Board
   end
 
   def empty?(pos)
-    @grid[pos.first][pos.last] == nil # means square is not marked, so returns true
+    @grid[pos.first][pos.last] == nil # nil means square is not marked, so returns true
   end
 
   def diagonal
