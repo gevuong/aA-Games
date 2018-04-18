@@ -16,6 +16,7 @@
 
 - Polymorphism
     - Poly in Greek means "many", morph means "form" or "shape". In programming, it refers to the ability of using a single method in many ways depending on data input, or for many objects or other data types.
+    - i.e. "+" symbol, because based on **data input** (i.e. 1 + 1, "1" + "1", [1] + [1]), the "+" method will either concat arrays, strings, or add integers. This is an example of how a single method morphs, depending on data type.
     - Can use polymorphism with inheritance, or with different objects
 
     ```
