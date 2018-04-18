@@ -17,7 +17,7 @@
 
 
 ### How to improve DB performance?
-- Add `explain analyze` in front of a query and the query plan will display, showing the time it takes to execute each query being made. This does not execute the query.
+- **Add `explain analyze` in front of a query and the query plan will display, showing the time it takes to execute each query being made. This does not execute the query.**
 
 
 ### Options to Scale DB
