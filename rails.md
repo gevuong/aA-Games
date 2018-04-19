@@ -1,3 +1,5 @@
+### Yo, Welcome to Rails Notes!
+
 - ActionController
     - Provides protection from CSRF (cross-site request forgery) attacks by checking the authenticity token in POST or PATCH requests.
 

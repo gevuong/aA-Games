@@ -1,3 +1,5 @@
+### Hi, Welcome to Ruby Notes!
+
 - Ruby is pass-by-value.
 
     ```

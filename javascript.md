@@ -1,3 +1,5 @@
+### Hi, Welcome to JavaScript Notes
+
 ### Parallelism vs Concurrency
 
 #### Concurrency

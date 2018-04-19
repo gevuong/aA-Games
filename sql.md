@@ -1,3 +1,29 @@
+### Hey, Welcome to SQL Notes!
+
+
+**A SQL query enters The Foo Bar, a popular attraction programmers frequent, walks up to two tables, and asks, "Can I join you?"**
+
+
+- SQL
+    - Example of the order of execution of a Query
+
+    ```
+    Complete SELECT query
+    SELECT DISTINCT column, AGG_FUNC(column_or_expression), …
+    FROM mytable
+        JOIN another_table
+          ON mytable.column = another_table.column
+        WHERE constraint_expression
+        GROUP BY column
+        HAVING constraint_expression
+        ORDER BY column ASC/DESC
+        LIMIT count OFFSET COUNT;
+    ```
+
+    - Understanding SQL JOINs
+        - This [article](https://blog.codinghorror.com/a-visual-explanation-of-sql-joins/) explains it very well.
+
+
 - ActiveRecord
     - All models in Rails inherit from ActiveRecord
     - an ORM (object relational mapping), allows us to represent data from a DB as Ruby objects
@@ -32,23 +58,3 @@
     - Option 2: Joining Tables
         - eager loading returns lots of data, which is unnecessary if all you want is the number of comments.
         - When we want to use aggregate functions (i.e. MIN(), MAX(), COUNT(), AVG(), SUM()) with the associated records, like getting the sum of comments (and don't care about the comments themselves), use .joins().
-
-
-- SQL
-    - Example of the order of execution of a Query
-
-    ```
-    Complete SELECT query
-    SELECT DISTINCT column, AGG_FUNC(column_or_expression), …
-    FROM mytable
-        JOIN another_table
-          ON mytable.column = another_table.column
-        WHERE constraint_expression
-        GROUP BY column
-        HAVING constraint_expression
-        ORDER BY column ASC/DESC
-        LIMIT count OFFSET COUNT;
-    ```
-
-    - Understanding SQL JOINs
-        - This [article](https://blog.codinghorror.com/a-visual-explanation-of-sql-joins/) explains it very well.
