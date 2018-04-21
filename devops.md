@@ -1,16 +1,23 @@
-# Intro to DevOps
+# 2-Week Intro to DevOps
 
-### Table of Contents
-- *[OpsWorks and Chef](#OpsWorks and Chef)*
-- [OpsWorks and Chef](#OpsWorks and Chef)
 
-## W1D2, Tuesday, April 20th, 2018, CI/CD
+## Table of Contents
+- *[CI/CD](#ci-cd)* (under construction)
+- *[AWS RDS](#aws-rds)* (under construction)
+- *[OpsWorks and Chef](#opsworks-and-chef)*
+- *[Additional Resources](#additional-resources)*
+
+
+## CI CD
+## W1D2, Tuesday, April 20th, 2018
 - Steps implemented
 - Create and setup AWS EC2 (Elastic Cloud Computing) instance to use as our CI/CD server
 - Launching EC2 instances are essentially remote web servers.
 
-## W1D3, Wednesday, April 4th, 2018, AWS RDS (Relational Database Service)
-- In RDS, the underlying data structure is a BST, and an array with fixed fields. What do you mean by that?
+
+## AWS RDS
+## W1D3, Wednesday, April 4th, 2018
+- In relational databases, the underlying data structure is a BST, and an array with fixed fields. What do you mean by that?
     - When an index is created, a new BST is created. The name (or column) of that created index become the keys stored in a BST.
     - The value of each node determines the location of where the data is located in the file (i.e. .dat or .db) that the DB uses to store data.
     - DB stores data in files, and the data stored is contiguous, meaning the data is stored in the order of when record was created, and can easily be indexed.
@@ -20,10 +27,9 @@
 - Providing additional indices increases read speed, but slows write speed. How?
     - Reading data takes log(n) time, but worst case is O(n). When writing data, re-balancing BST using AVL takes log(n) time.
 
-### Why do we use a BST instead of a hash even though hash is O(1) lookup?
+### Wait, a hash has faster lookup time than a BST. So why do we use a BST instead of a hash?
 - Yes, a hash has a faster lookup time than a BST. A hash is O(1) lookup, and BST is log(n) lookup. However, a hash is not in order, so it doesn't suit well for searches, but are great for caching when using Memcached or Redis.
 - Whenever a new record is added, the btree needs to re-balance itself, and uses AVL, an auto-balancing BST algorithm.
-
 
 
 ### How do you improve DB performance?
@@ -44,7 +50,7 @@
 
 ### What is Chef?
 - An open-source automation platform that configures and manages infrastructure, like software deployment.
--
+
 
 ### How does Chef work?
 1. Lets start with the Chef server. It manages the nodes that make up your infrastructure. What are nodes? A **node** can be a physical server, VM, your local laptop, or anything in your computing environment.
@@ -84,7 +90,6 @@
     - In the grander scheme, OpsWorks integrates with the lifecycle of AWS EC2 instances.
 
 
-
 ### Ok, now that I know what OpsWorks is, where does Chef come into play?
 - Chef **recipes** are scripts for OpsWorks to run.
 - These scripts are like predefined rules. For example, when a new machine or instance is added to the fleet, these recipes are executed.
@@ -113,8 +118,8 @@
 
 
 ### Special Thanks to
-- [Gene Hallman](https://github.com/genehallman)
-- [Kelly Chung](https://github.com/chungkikelly)
+- Gene Hallman
+- Kelly Chung
 
 ### Additional Resources
 [AWS OpsWorks Overview and Demo w/ Chef](https://www.youtube.com/watch?v=cj_LoG6C2xk) - 15min YT video
