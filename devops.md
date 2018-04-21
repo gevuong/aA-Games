@@ -1,6 +1,5 @@
 # 2-Week Intro to DevOps
 
-
 ## Table of Contents
 - *[CI/CD](#ci-cd)* (under construction)
 - *[AWS RDS](#aws-rds)* (under construction)
