@@ -1,8 +1,9 @@
 # Intro to DevOps
 
 ### Table of Contents
-- *[OpsWorks and Chef](#OpsWorks and Chef)*
-- [OpsWorks and Chef](#OpsWorks and Chef)
+:link: *[OpsWorks and Chef](#OpsWorks and Chef)* :link:
+:link: *[W2D1](#W2D1)* :link:
+[OpsWorks and Chef](#OpsWorks and Chef)
 
 ## W1D2, Tuesday, April 20th, 2018, CI/CD
 - Steps implemented
@@ -38,6 +39,7 @@
     - Horizontal (i.e. client-based)
         - Slack
 
+## W2D1
 
 ## OpsWorks and Chef
 ### W2D1, Monday, April 9th, 2018
