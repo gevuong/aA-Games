@@ -1,13 +1,57 @@
-- BST
-    - #find() - log(n)
-    - #insert() - log(n)
-    - #delete() - log(n)
-    
+### BST (Binary Search Trees)
+
+#### Types of Trees
+    - complete:
+        - every level of the tree is fully filled, except for the last level. If last level is filled, it is filled from left to right.
+    - full
+        - has either zero or two children. No nodes have only one child.
+    - perfect
+        - a tree that is both full and complete.
+
+#### Types of Traversal
+- in-order (most widely used)
+    - touches all nodes in BST in order from least to greatest.
+    - traverses to the lowest level along left branch, touches left child, then root node of that sub-tree, then right node of sub-tree.
+- pre-order
+    - touches top node first, then traverses left branch, touching every left child until it reaches the bottom, then touches the right child of each sub-tree along left branch, working its way back up to top node, then traverses the right branch of BST, and repeats traversal pattern done on left branch.
+- post-order  
+    - great for safely deleting nodes from a BST because it starts from the lowest level and works its way up.
+    - first touches lowest level of left branch, touching left child of each sub-tree, right child of each sub-tree, then parent node of each sub-tree.
+    - Then touches lowest level of right branch, touching left child of each sub-tree, right child of each sub-tree, then parent node of each sub-tree, finally reaching the top node of original BST.
+
+#### What you need to know
+
+- #find() - log(n)
+- #insert() - log(n)
+- #delete() - log(n)
+
     - kth largest node
         - keep a count
         - keep reference to correct node
 
 
+### Heap
+#### What is a Binary Heap?
+
+- A complete binary tree that satisfies the heap ordering property (min-heap or max-heap).
+- Reminder: a complete binary tree is a tree
+- The **heap ordering property** can be of two types:
+    - min-heap
+        - value of each node must be greater than or equal to value of its parent
+        - min value is at the root
+    - max-heap  
+        - value of each node <= value of its parent
+        - max value is at the root
+
+- In this case, the word "heap" will always refer to min-heap.
+
+
+#### What are some of its applications?
+- Heapsort (in-place sorting method )
+- Priority Queues
+
+
+## Linked Lists
 - Linked list
     - find O(n)
     - indexing is O(n)
