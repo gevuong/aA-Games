@@ -8,7 +8,7 @@
 ## W1D3, Wednesday, April 4th, 2018, AWS RDS (Relational Database Service)
 - In RDS, the underlying data structure is a BST, and an array with fixed fields. What do you mean by that?
     - When an index is created, a new BST is created. The name (or column) of that created index become the keys stored in a BST.
-    - The value of each node determine the location of where the data is located in the file that the DB uses to store data.
+    - The value of each node determines the location of where the data is located in the file (i.e. .dat or .db) that the DB uses to store data.
     - DB stores data in files, and the data stored is contiguous, meaning the data is stored in the order of when record was created, and can easily be indexed.
     - The data is stored in an array-like structure. This means that #insert is O(1) because you are pushing new data to end of the array-like structure.
 
@@ -16,17 +16,17 @@
 - Providing additional indices increases read speed, but slows write speed. How?
     - Reading data takes log(n) time, but worst case is O(n). When writing data, re-balancing BST using AVL takes log(n) time.
 
-
-- A hash is O(1) lookup, and BST is log(n) lookup. However, a hash is not in order, so it doesn't suit well for searches, but are great for caching when using Memcached or Redis.
+### Why do we use a BST instead of a hash even though hash is O(1) lookup?
+- Yes, a hash has a faster lookup time than a BST. A hash is O(1) lookup, and BST is log(n) lookup. However, a hash is not in order, so it doesn't suit well for searches, but are great for caching when using Memcached or Redis.
 - Whenever a new record is added, the btree needs to re-balance itself, and uses AVL, an auto-balancing BST algorithm.
 
 
 
-### How to improve DB performance?
-- **Add `explain analyze` in front of a query and the query plan will display, showing the time it takes to execute each query being made. This does not execute the query.**
+### How do you improve DB performance?
+- **Add `explain analyze` in front of a coplex query and the query plan will display, showing the time it takes to execute each query being made. This does not execute the query.**
 
 
-### Options to Scale DB
+### What are some ways to scale a DB?
 - Master/Slave
 - Sharding
     - Vertical (i.e. microservices)
@@ -107,8 +107,10 @@
         2. dependency installs (i.e. bundle, npm, compile webpack and rails assets)
 
 
-### Thanks to
+### Special Thanks to
 - [Gene Hallman](https://github.com/genehallman)
+- [Kelly Chung](https://github.com/chungkikelly)
+
 
 ### Additional Resources
 [AWS OpsWorks Overview and Demo w/ Chef](https://www.youtube.com/watch?v=cj_LoG6C2xk) - 15min YT video

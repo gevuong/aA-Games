@@ -34,7 +34,9 @@
 #### What is a Binary Heap?
 
 - A complete binary tree that satisfies the heap ordering property (min-heap or max-heap).
-- Reminder: a complete binary tree is a tree
+- **Reminder**: a complete binary tree is a tree where every level of the tree is fully filled, except for the last level. If last level is filled, it is filled from left to right.
+
+
 - The **heap ordering property** can be of two types:
     - min-heap
         - value of each node must be greater than or equal to value of its parent
@@ -43,10 +45,10 @@
         - value of each node <= value of its parent
         - max value is at the root
 
-- In this case, the word "heap" will always refer to min-heap.
+- For the purposes of this article, the word "heap" will always refer to min-heap.
 
 
-#### What are some of its applications?
+#### In what applications would I use a binary heap?
 - Heapsort (in-place sorting method )
 - Priority Queues
 
