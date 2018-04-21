@@ -1,14 +1,14 @@
-### BST (Binary Search Trees)
+## BST (Binary Search Trees)
 
-#### Types of Trees
-    - complete:
-        - every level of the tree is fully filled, except for the last level. If last level is filled, it is filled from left to right.
-    - full
-        - has either zero or two children. No nodes have only one child.
-    - perfect
-        - a tree that is both full and complete.
+### Types of Trees
+- complete:
+    - every level of the tree is fully filled, except for the last level. If last level is filled, it is filled from left to right.
+- full
+    - has either zero or two children. No nodes have only one child.
+- perfect
+    - a tree that is both full and complete.
 
-#### Types of Traversal
+### Types of Traversal
 - in-order (most widely used)
     - touches all nodes in BST in order from least to greatest.
     - traverses to the lowest level along left branch, touches left child, then root node of that sub-tree, then right node of sub-tree.
@@ -19,7 +19,7 @@
     - first touches lowest level of left branch, touching left child of each sub-tree, right child of each sub-tree, then parent node of each sub-tree.
     - Then touches lowest level of right branch, touching left child of each sub-tree, right child of each sub-tree, then parent node of each sub-tree, finally reaching the top node of original BST.
 
-#### What you need to know
+### What you need to know
 
 - #find() - log(n)
 - #insert() - log(n)
@@ -30,8 +30,8 @@
         - keep reference to correct node
 
 
-### Heap
-#### What is a Binary Heap?
+## Heap
+### What is a Binary Heap?
 
 - A complete binary tree that satisfies the heap ordering property (min-heap or max-heap).
 - **Reminder**: a complete binary tree is a tree where every level of the tree is fully filled, except for the last level. If last level is filled, it is filled from left to right.
@@ -48,7 +48,7 @@
 - For the purposes of this article, the word "heap" will always refer to min-heap.
 
 
-#### In what applications would I use a binary heap?
+### In what applications would I use a binary heap?
 - Heapsort (in-place sorting method )
 - Priority Queues
 

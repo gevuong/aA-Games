@@ -1,5 +1,9 @@
 # Intro to DevOps
 
+### Table of Contents
+- *[OpsWorks and Chef](#OpsWorks and Chef)*
+- [OpsWorks and Chef](#OpsWorks and Chef)
+
 ## W1D2, Tuesday, April 20th, 2018, CI/CD
 - Steps implemented
 - Create and setup AWS EC2 (Elastic Cloud Computing) instance to use as our CI/CD server
@@ -35,7 +39,8 @@
         - Slack
 
 
-## W2D1, Monday, April 9th, 2018, OpsWorks and Chef
+## OpsWorks and Chef
+### W2D1, Monday, April 9th, 2018
 
 ### What is Chef?
 - An open-source automation platform that configures and manages infrastructure, like software deployment.
@@ -110,7 +115,6 @@
 ### Special Thanks to
 - [Gene Hallman](https://github.com/genehallman)
 - [Kelly Chung](https://github.com/chungkikelly)
-
 
 ### Additional Resources
 [AWS OpsWorks Overview and Demo w/ Chef](https://www.youtube.com/watch?v=cj_LoG6C2xk) - 15min YT video
