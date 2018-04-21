@@ -1,9 +1,18 @@
 # Intro to DevOps
 
 ### Table of Contents
-:link: *[OpsWorks and Chef](#OpsWorks and Chef)* :link:
+
+:link: *[OpsWorksandChef](#opsworks-and-chef)* :link:
+
+:link: *[OpsWorks and Chef](#opsworksandchef)* :link:
+
+:link: *[opsorksandchef](#opsworksandchef)* :link:
 
 :link: *[w2d1](#w2d1)* :link:
+
+:link: *[W2D3](#w2d3)* :link:
+
+:link: *[W2D3](#w2-d3)* :link:
 
 [OpsWorks and Chef](#OpsWorks and Chef)
 
@@ -27,7 +36,7 @@
 - Yes, a hash has a faster lookup time than a BST. A hash is O(1) lookup, and BST is log(n) lookup. However, a hash is not in order, so it doesn't suit well for searches, but are great for caching when using Memcached or Redis.
 - Whenever a new record is added, the btree needs to re-balance itself, and uses AVL, an auto-balancing BST algorithm.
 
-
+## w2 d3
 
 ### How do you improve DB performance?
 - **Add `explain analyze` in front of a coplex query and the query plan will display, showing the time it takes to execute each query being made. This does not execute the query.**
@@ -59,6 +68,7 @@
 
     - If it helps, the way I see it, a Chef Client can be analogous to a React container, which configures (or maps) any changes in the state as props. The store (or Chef Server) sends latest application state to the container (or Chef Client), the container configures those changes, and maps them to props, which are then applied to the presentational components (or nodes).
 
+## W2D3 
 
 ### Chef Setup and Berkshelf
 - Uses Ruby as Domain Specific Language (DSL)
@@ -87,7 +97,7 @@
     - In the grand scheme of things, when a deploy is triggered in the CI build/deploy pipeline using Jenkins, a deployment system like Chef comes into play, which is responsible for configuring the **layers** within the stack, which is modeled after your application.
     - In the grander scheme, OpsWorks integrates with the lifecycle of AWS EC2 instances.
 
-
+## opworks and chef
 
 ### Ok, now that I know what OpsWorks is, where does Chef come into play?
 - Chef **recipes** are scripts for OpsWorks to run.
@@ -115,6 +125,7 @@
         1. Git (allows Git checkout of latest version of Master branch)
         2. dependency installs (i.e. bundle, npm, compile webpack and rails assets)
 
+## opsworksandchef
 
 ### Special Thanks to
 - [Gene Hallman](https://github.com/genehallman)
