@@ -2,7 +2,9 @@
 
 ### Table of Contents
 :link: *[OpsWorks and Chef](#OpsWorks and Chef)* :link:
-:link: *[W2D1](#W2D1)* :link:
+
+:link: *[w2d1](#w2d1)* :link:
+
 [OpsWorks and Chef](#OpsWorks and Chef)
 
 ## W1D2, Tuesday, April 20th, 2018, CI/CD
@@ -39,7 +41,7 @@
     - Horizontal (i.e. client-based)
         - Slack
 
-## W2D1
+## w2d1
 
 ## OpsWorks and Chef
 ### W2D1, Monday, April 9th, 2018
