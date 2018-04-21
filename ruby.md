@@ -14,7 +14,7 @@
     ```
 
 - What is the object-oriented way to get wealthy? Inheritance!
-    - There are two major ways in which super is called. If super is called without any arguments, the arguments passed to the method will be implicitly passed on to the parent class's implementation.
+    - **There are two major ways in which super is called. If super is called without any arguments, the arguments passed to the method will be implicitly passed on to the parent class's implementation.**
 
 - Polymorphism
     - Poly in Greek means "many", morph means "form" or "shape". In programming, it refers to the ability of using a single method in many ways depending on data input, or for many objects or other data types.

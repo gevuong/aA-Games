@@ -1,3 +1,13 @@
+- BST
+    - #find() - log(n)
+    - #insert() - log(n)
+    - #delete() - log(n)
+    
+    - kth largest node
+        - keep a count
+        - keep reference to correct node
+
+
 - Linked list
     - find O(n)
     - indexing is O(n)

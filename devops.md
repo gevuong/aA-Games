@@ -1,5 +1,10 @@
 # Intro to DevOps
 
+## W1D2, Tuesday, April 20th, 2018, CI/CD
+- Steps implemented
+- Create and setup AWS EC2 (Elastic Cloud Computing) instance to use as our CI/CD server
+- Launching EC2 instances are essentially remote web servers.
+
 ## W1D3, Wednesday, April 4th, 2018, AWS RDS
 - In RDS, the underlying data structure is a BST, and an array with fixed fields. What do you mean by that?
     - When an index is created, a new BST is created. The name (or column) of that created index are the keys stored in a BST. The values of each node determine the location of where the data is located in the file that the DB uses to store data.
