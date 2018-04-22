@@ -71,6 +71,7 @@ def maximum_depth_of_btree_rec(root)
     left_depth_count = maximum_depth_of_btree_rec(root.left)
     right_depth_count = maximum_depth_of_btree_rec(root.right)
 
+    # a tree that only contains root as a depth of 1 
     [left_depth_count, right_depth_count].max + 1
 end
 

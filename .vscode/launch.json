@@ -9,7 +9,7 @@
             "type": "Ruby",
             "request": "launch",
             "cwd": "${workspaceRoot}",
-            "program": "${workspaceRoot}/maximum_depth_of_btree.rb"
+            "program": "${workspaceRoot}/in_order_traversal.rb"
         },
         {
             "name": "Listen for rdebug-ide",

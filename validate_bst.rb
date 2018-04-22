@@ -34,6 +34,9 @@ class BTNode
 end
 
 def is_valid_bst(root)
-    # return true if root.nil?
-    
+    # return true if root.nil? because bst only contains a root
+
+    # for each root, I need to find min and max child node, assuming root has children
+
+    # then compare root with min_value, and root with max_value
 end
