@@ -8,7 +8,7 @@ end
 
 # Iterative solution
 # Time: O(n), where n is number of nodes in BST
-# Space: O(h), worst case would be height of stack. However, since we're returning an array of all nodes, then space is O(n).
+# Space: O(n), length of returned array. Otherwise, space is O(h), length of call stack.
 def in_order_traversal(root)
     return [] if root.nil?
 
@@ -16,24 +16,17 @@ def in_order_traversal(root)
     stack = []
     in_order_arr = []
 
-    current_node = root
-
     while true
         # push left_child in stack until left_child = nil, that means you've reached minimum value
-        if current_node
-            stack.push(current_node)
-            
-            # set current_node to left child
-            left_child = current_node.left
-            current_node = left_child
+        if root
+            stack.push(root)
+            root = root.left
 
-        else # begin to de-stack, push root into array, look at root's right_child. If right_child = nil, enter else statement and destack again. 
+        else # de-stack, push root into array. set root to root's right_child. If right_child = nil, de-stack again
             return in_order_arr if stack.empty?
             root = stack.pop
-            in_order_arr.push(root.val)
-            
-            right_child = root.right
-            current_node = right_child
+            in_order_arr.push(root.val)            
+            root = root.right
         end
     end
 
@@ -44,13 +37,32 @@ end
 # recursive method
 # Time: O(n), where n is number of nodes in BST, visit all nodes once
 # Space: O(h), height of tree would be height of call stack. However, in this case, space is O(n), n being array containing all nodes in order
-# did not set up base case because wasn't sure how to push recursive call into base case [].
+
+# did not set up base case because not sure how to push return value of each recursive call into base case [].
 def in_order_traversal_rec(root)
     # return [] if root.nil?
     arr = []
     arr.concat(in_order_traversal_rec(root.left)) if root.left
     arr.push(root.val)
     arr.concat(in_order_traversal_rec(root.right)) if root.right
+    arr
+end
+
+def pre_order_traversal_rec(root)
+    # return [] if root.nil?
+    arr = []
+    arr.push(root.val)
+    arr.concat(pre_order_traversal_rec(root.left)) if root.left
+    arr.concat(pre_order_traversal_rec(root.right)) if root.right
+    arr
+end
+
+def post_order_traversal_rec(root)
+    # return [] if root.nil?
+    arr = []
+    arr.concat(post_order_traversal_rec(root.left)) if root.left
+    arr.concat(post_order_traversal_rec(root.right)) if root.right
+    arr.push(root.val)
     arr
 end
 
@@ -66,5 +78,7 @@ node_2.left = node_1
 node_2.right = node_3
 node_4.right = node_5
 
-p in_order_traversal(node_4)
-p in_order_traversal_rec(node_4)
+p in_order_traversal(node_4) == [1, 2, 3, 4, 5]
+p in_order_traversal_rec(node_4) == [1, 2, 3, 4, 5]
+p pre_order_traversal_rec(node_4) == [4, 2, 1, 3, 5]
+p post_order_traversal_rec(node_4) == [1, 3, 2, 5, 4]
