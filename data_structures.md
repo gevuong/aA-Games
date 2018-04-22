@@ -65,6 +65,13 @@
         3. visit root
 
 
+- **level-order**
+    - return nodes from left to right, level by level. In other words, implement BFS. 
+
+    - Implementation 
+        - setup a queue. push roots children to queue. 
+        - shift queue and push shifted_node's children to queue
+
 - Example:
 
 ![Example Tree](images/example_tree.gif)

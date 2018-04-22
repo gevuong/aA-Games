@@ -74,7 +74,7 @@ def is_valid_bst_rec?(root)
 
 end 
 
-
+# Test case
 node_1 = BTNode.new(1)
 node_2 = BTNode.new(2)
 node_3 = BTNode.new(3)
