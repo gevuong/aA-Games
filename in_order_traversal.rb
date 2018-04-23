@@ -1,6 +1,6 @@
 class BTNode
-    attr_reader :val
     attr_accessor :left, :right
+    attr_reader :val
     def initialize(val)
         @val = val
         @left, @right = nil, nil
@@ -41,12 +41,20 @@ end
 
 # did not set up base case because not sure how to push return value of each recursive call into base case [].
 def in_order_traversal_rec(root)
-    # return [] if root.nil?
+    return [] if root.nil?
     arr = []
-    arr.concat(in_order_traversal_rec(root.left)) if root.left
+    arr.concat(in_order_traversal_rec(root.left))
     arr.push(root.val)
-    arr.concat(in_order_traversal_rec(root.right)) if root.right
+    arr.concat(in_order_traversal_rec(root.right))
     arr
+end
+
+# return each node value on each new line. Without storing values in array
+def in_order_traversal_rec2(root)
+    return if root.nil?
+    p root
+    in_order_traversal_rec2(root.left)
+    in_order_traversal_rec2(root.right)
 end
 
 
@@ -64,3 +72,4 @@ node_4.right = node_5
 
 p in_order_traversal(node_4) == [1, 2, 3, 4, 5]
 p in_order_traversal_rec(node_4) == [1, 2, 3, 4, 5]
+p in_order_traversal_rec2(node_4) #== [1, 2, 3, 4, 5]

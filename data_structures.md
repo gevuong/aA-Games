@@ -26,7 +26,7 @@
     - nodes have either zero or two children. No nodes have only one child.
 - perfect
     - a tree that is both full and complete.
-- balanced
+- balanced (sometimes referred to height-balanced)
     - height of left and right subtrees of any node never differ by more than one
 
 

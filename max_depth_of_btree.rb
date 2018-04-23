@@ -28,7 +28,7 @@ end
 # iterative solution
 # Time: O(n), where n is number of nodes. We visit each node once. Outer while loop processes are constant.
 # Space: O(n), where n is length of node_queue, eventually it's empty
-def maximum_depth_of_btree(root)
+def max_depth_of_btree(root)
     # return 0 if root is nil. Don't need to check root.left.nil? && root.right.nil? because root may already be nilClass.
     return 0 if root.nil?
 
@@ -66,10 +66,10 @@ end
 # Time: O(n), where n is number of nodes in BT because we visit all nodes once
 # Space: O(n), where n is height of BT, which is the length of call stack
 # If we don't consider size of call stack, then space is O(1).
-def maximum_depth_of_btree_rec(root)
+def max_depth_of_btree_rec(root)
     return 0 if root.nil?
-    left_depth_count = maximum_depth_of_btree_rec(root.left)
-    right_depth_count = maximum_depth_of_btree_rec(root.right)
+    left_depth_count = max_depth_of_btree_rec(root.left)
+    right_depth_count = max_depth_of_btree_rec(root.right)
 
     # a tree that only contains root as a depth of 1 
     [left_depth_count, right_depth_count].max + 1
@@ -87,5 +87,5 @@ node_2.left = node_4
 node_5 = BTNode.new(5)
 node_3.right = node_5
 
-p maximum_depth_of_btree(node_1) == 3
-p maximum_depth_of_btree_rec(node_1) == 3
+p max_depth_of_btree(node_1) == 3
+p max_depth_of_btree_rec(node_1) == 3
