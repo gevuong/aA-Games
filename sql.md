@@ -1,7 +1,6 @@
 ### Hey, Welcome to SQL Notes!
 
-
-**A SQL query enters The Foo Bar, a popular attraction programmers frequent, walks up to two tables, and asks, "Can I join you?"**
+**A SQL query enters The Foo Bar, walks up to two tables, and asks, "Can I join you?"**
 
 
 - SQL
@@ -58,3 +57,27 @@
     - Option 2: Joining Tables
         - eager loading returns lots of data, which is unnecessary if all you want is the number of comments.
         - When we want to use aggregate functions (i.e. MIN(), MAX(), COUNT(), AVG(), SUM()) with the associated records, like getting the sum of comments (and don't care about the comments themselves), use .joins().
+
+
+### psql commands
+- Steps to create a DB and Table using CLI
+    - login user in psql: `psql postgres` or `psql GeorgeV.` Once logged in CLI should be `#postgres` or `#GeorgeV.`
+    - to create database: CREATE DATABASE <insert_db_name>
+    - to list databases: \l
+    - to access database: psql <insert_db_name>
+    - to create table: CREATE TABLE <insert_table_name> 
+
+        ```
+                    CREATE TABLE COMPANY(
+            ID INT PRIMARY KEY     NOT NULL,
+            NAME           TEXT    NOT NULL,
+            AGE            INT     NOT NULL,
+            ADDRESS        CHAR(50),
+            SALARY         REAL
+            );
+        ```
+
+        For more info: https://www.tutorialspoint.com/postgresql/postgresql_create_table.htm
+
+    - to list all tables: \d
+    - to exit psql CLI: \q

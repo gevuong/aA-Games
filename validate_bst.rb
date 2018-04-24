@@ -69,9 +69,16 @@ def is_valid_bst?(root)
 end
 
 
-# recursive solution
-def is_valid_bst_rec?(root)
+# recursive solution, include min_val and max_val as arguments. The idea is to update min_val and max_val to be root.left and root.right, respecively, each time a recursive call is made. Then if root.left.val > min_val, or root.right.val < max_val, return false.
+def is_valid_bst_rec?(root, min_val = nil, max_val = nil)
+    return true if root.nil?
 
+    # compare root.val with min_val and max_val. root.val represents the previous roots children
+    return false if min_val && root.val > min_val 
+    return false if max_val && root.val < max_val 
+
+    # pass left_child and right_child to recursive call. Update min_val and max_val to root.val. This means that root.left needs to be less than root.val, and root.right greater than root.val
+    return true if is_valid_bst_rec?(root.left, root.val, max_val) && is_valid_bst_rec?(root.right, min_val, root.val)
 end 
 
 # Test case
@@ -89,4 +96,7 @@ node_4.right = node_5
 p is_valid_bst?(node_4)  == true
 p is_valid_bst?(node_2)  == true
 p is_valid_bst?(node_3)  == true
+p is_valid_bst_rec?(node_4)  == true
+p is_valid_bst_rec?(node_2)  == true
+p is_valid_bst_rec?(node_3)  == true
 

@@ -41,7 +41,7 @@ class BTNode
 end
 
 
-# Runtime on LeetCode is 116ms...I beat 5.88% of all Ruby submissions...but it works.
+# Runtime on LeetCode is 116ms...beat 5.88% of all Ruby submissions...but it works.
 # Time: O(n^3), where n is number of nodes in btree
 # Space: O(n), where n is length of node_arr after traversal. Otherwise, I think space would be O(H), where H is height of btree when processing depth_of_subtree or in_order_traversal
 def is_balanced?(root)
@@ -64,7 +64,7 @@ def is_balanced?(root)
     true
 end 
 
-# helper method 
+# helper methods
 # Time: O(n), where n is number of nodes in given binary tree.
 # Space: O(1), excluding length of call stack
 def depth_of_subtree(root)
