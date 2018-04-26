@@ -65,9 +65,10 @@ end
 
 # method defining when a cell is an island
 def is_island?(row, col, visited, grid)
-    return (row >= 0 && row < grid.length) && 
-           (col >= 0 && col < grid[0].length) &&
-           (!visited[row][col] && grid[row][col]) # meaning neighboring cell is true (true meaning it's an island), and cell is unvisited
+    return true if (row >= 0 && row < grid.length) && 
+                   (col >= 0 && col < grid[0].length) &&
+                   (!visited[row][col] && grid[row][col]) # meaning neighboring cell is true (true meaning it's an island), and cell is unvisited
+    false
 end
 
 
