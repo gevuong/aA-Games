@@ -14,47 +14,47 @@
 #   [15,7]
 # ]
 
-class BTNode 
+class BTNode
     attr_reader :val
     attr_accessor :left, :right
 
     def initialize(val)
-        @val = val 
+        @val = val
         @left, @right = nil, nil
-    end 
-end 
+    end
+end
 
 def level_order_traversal(root)
-    return [] if root.nil? 
-    
+    return [] if root.nil?
+
     # initialize queue with root, 2d array, and nodes_per_level
-    queue = [root] 
+    queue = [root]
     output_arr = [[root.val]]
     sub_arr = []
 
-    while true 
-        return output_arr if queue.empty? 
+    while true
+        return output_arr if queue.empty?
 
         output_arr.push(sub_arr) unless sub_arr.empty?
 
         sub_arr = [] # reset subarray
         nodes_per_level = queue.length # initially 1, which is root
-        
+
         while nodes_per_level > 0
             root = queue.shift # FIFO
-            
-            if root.left 
+
+            if root.left
                 queue.push(root.left)
                 sub_arr.push(root.left.val)
             end
 
-            if root.right 
+            if root.right
                 queue.push(root.right)
-                sub_arr.push(root.right.val)  
-            end 
-            
+                sub_arr.push(root.right.val)
+            end
+
             nodes_per_level -= 1
-        end 
+        end
     end
 end
 
