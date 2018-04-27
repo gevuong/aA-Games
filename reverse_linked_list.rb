@@ -11,13 +11,15 @@ class LinkedList
     def initialize
         @head = Node.new
         @tail = Node.new
+        @head.next = @tail
     end 
 end 
 
 
-def reverse_LL(LL)
-    current = LL.head
+def reverse_LL(head)
+    current = head
     prev = nil
+
     while current 
         next_node = current.next
         current.next = prev 
@@ -27,3 +29,7 @@ def reverse_LL(LL)
     
     prev
 end 
+
+
+# test case 
+LL = LinkedList.new

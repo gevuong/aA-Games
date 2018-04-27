@@ -30,10 +30,14 @@ class BSTNode
     end 
 end 
 
-# Assume k is within length of arr.length
+# Time: O(n), where n is all nodes in BST.
+# Space: O(n), where n is length of array, which stores all nodes in BST.
+# Strategy: in order_traversal then index array. Not the most efficient, can improve to O(h) time and space.
 def kth_largest_node(root, k)
-    # in order_traversal then index array[-2]
     arr = in_order_traversal(root)
+    
+    # make sure k is within range of array length
+    return nil if k >= arr.length || k <= 0
     arr[arr.length - k]
 end 
 

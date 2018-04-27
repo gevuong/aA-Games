@@ -45,6 +45,9 @@ expected = [
     [0,0,0,0,0,0,0,0,0]]
 
 
+# run tick() ten times, and each time, return a new_state, which is then passed in the recursive call. When count == 10, base case will return seed_state, which in this case is the expected state after 10 ticks. What about the call stack? It should begin unwinding, but after returning expected state, the method just exits...
+
+# Space: O(h), where h is height of call stack, which is equal to count
 def game_of_life(seed_state, count = 0)
     return seed_state if count == 10
     
@@ -87,6 +90,7 @@ def tick(state)
 
     new_state
 end 
+
 
 # Grid of 8 surrounding cells of [x,y]
 # [[x-1, y-1], [x-1, y], [x-1, y+1],
