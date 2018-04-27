@@ -46,7 +46,7 @@ expected = [
 
 
 def game_of_life(seed_state, count = 0)
-    return new_state if count == 10
+    return seed_state if count == 10
     
     new_state = tick(seed_state)
     count += 1
@@ -122,6 +122,6 @@ def valid_cell?(row, col, state)
     false
 end 
 
-p game_of_life(seed)
+p game_of_life(seed) == expected
 p tick(seed) == seed1
     

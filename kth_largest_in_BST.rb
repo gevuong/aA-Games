@@ -30,7 +30,7 @@ class BSTNode
     end 
 end 
 
-
+# Assume k is within length of arr.length
 def kth_largest_node(root, k)
     # in order_traversal then index array[-2]
     arr = in_order_traversal(root)
