@@ -3,6 +3,9 @@
 **A SQL query enters The Foo Bar, walks up to two tables, and asks, "Can I join you?"**
 
 
+- SQL vs NoSQL
+
+
 - SQL
     - Example of the order of execution of a Query
 

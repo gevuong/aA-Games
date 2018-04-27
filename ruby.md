@@ -1,4 +1,37 @@
-### Hi, Welcome to Ruby Notes!
+# Welcome to Ruby Notes!
+
+## TDD
+### What is TDD? 
+- a development process where tests are first written before application code.
+- this is contrary to the common development process of first writing application code, then tests to cover important parts of the code. 
+- the application code is written to pass written specs.
+
+### Why would you want to do write tests first??
+**0. Define the functionality by writing tests FIRST. Then implement with application code.**
+1. test your application code immediately.
+2. tests written first usually covers a lot of various edge cases, which isn't apparent when writing application code first.
+3. implements a more definitive RGR(Red, Green, Refactor) workflow, so developers know what to work on.
+4. avoids writing app code that's not necessary, and is not covered in the specs.
+5. encourages developer to focus on modularity, which means breaking the application into smaller, testable chunks.
+
+### Also...writing tests can make collaboration much easier. How?
+    - For example, if a developer is working remotely, or recently joined a huge project, the developer can read the written specs to understand the functionality of a module. Written specs then become a form of communication, or documentation for the codebase.
+    - Helps with refactoring large chunks of code after a team of developers have worked on the project. With tests, if anything breaks, you'll know where it came from. With tests, you'll understand the functionality of the module you're refactoring 
+
+### Ok, so what's the proper TDD workflow like?
+**Red, Green, Refactor** 
+    1. Write tests and watch them fail (failed tests turn red). Important to ensure tests initially fail or you can encounter false positives.
+    2. Write minimum amount of code to pass test (passed tests turn green).
+    3. Refactor code you just wrote to make it clean.
+
+### What can I use for testing code written in Ruby?
+- rspec
+    - a DSL made specifically for testing, has its own set of methods, syntax, and are all in Ruby code
+- guard-rpsec 
+    - a library that runs a tasks we specify (i.e. rspec tests) when files are modified. I have not used it before.
+
+
+------
 
 - Ruby is pass-by-value.
 

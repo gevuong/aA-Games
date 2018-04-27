@@ -4,3 +4,4 @@
 
 # make_change(14, [10, 7, 1])
 # # return 2 because [7, 7] is the smallest combination
+
