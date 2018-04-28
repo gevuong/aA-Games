@@ -1,9 +1,8 @@
 ### Welcome to Rails Notes!
 
 ### What is Rails?
-
 - a server-side framework that receives and parses HTTP requests, generates and returns HTTP responses to clients
-- 
+
 
 - Rack
     - middleware that sits between a web server (i.e. WEBrick, Puma) and application framework (i.e. Rails app), specifically, rails router.
@@ -36,7 +35,6 @@
     - The idea behind REST is that each HTTP operation (GET, POST, PATCH, UPDATE), with a particular resource, will produce predictable, standardized results. For example, a GET request to a resource with a specified id is expected to return data on that specific item, no matter what the resource is.
 
 
-
 ### What is the Asset Pipeline?
 - According to the official Rails guide, it's a **framework that concatenates and compresses (or minify) JavaScript and CSS assets.**
 - Implemented using [sprockets-rails](https://github.com/rails/sprockets) gem, and is enabled by default.
@@ -45,6 +43,8 @@
 ### What are some of its main features?
 1. Asset Concatenation
     - Sprockets gem concatenates all JS files into one master .js file, and CSS files into one master .css file. 
+        - Sprockets use manifest files (i.e. application.js or application.css), which contain directive, or instructions that tell Sprockets which files to require in order to build a single CSS or JS file.
+        - open `rails s` and visit `localhost:3000/assets/application.js`, you'll get a file containing all your application's JavaScript. 
     - This means that the number of requests made by the browser to render a web page is significantly reduced.
         - web browsers can only make a limited number of requests in parallel. By reducing the number of requests, your application can load faster.
     - Additional notes if interested: 
@@ -57,7 +57,7 @@
 3. Precompilation 
     - By default, the assets are automatically cached and served by the Rack middleware. 
     - However, if you want to have the web server itself serve and host assets, you can precompile the assets into the `/public` directory using `rake assets:precompile`, so they can be easily accessible from the web server, like Apache or NGinx.
-    - 
+
     
 4. Preprocessing
     - Asset files can be coded using higher-level languages, which then precompiles it down to actual assets. 
@@ -66,19 +66,10 @@
     - Supports SASS for CSS, CoffeeScript for JS, and ERB for both.
     - For more info: check out the `Tilt` gem.
 
+
 ### How do we manage assets?
-- Application.js file
-    - contains a manifest that lists all js files to be bundled
-
-
-
 - Any file or subdirectory created within `/app/assets`, `/lib/assets`, or `vendor/assets` directory can be accessible in URL. 
-
-#### But what are the other asset directories for? 
 - These other asset directories are used for non-app related assets. Assets not maintained by you, like a jQuery plugin JS file can be stored in `vendor/assets`. Assets that are maintained by you but are not specific to the app, or shared across apps can be stored in `lib/assets`.
-
-- open `rails s` and visit `localhost:3000/assets/application.js`, you'll get a file containing all your application's JavaScript. 
-
 
 
 
