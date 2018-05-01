@@ -107,7 +107,25 @@
 - CASE (a PostgreSQL conditional expression)
     - 
 
+- UNION 
+    - used to combine the result of two or more SELECT statements. data in two tables where only distinct values are 
+    - Example:
+        ```
+        SELECT column_name(s) FROM table1
+        UNION
+        SELECT column_name(s) FROM table2;
+        ```
+- UNION ALL
+    - allows duplicate values. UNION only selects distinct values by default.
 
+- SELF JOIN
+    - A self JOIN is a regular join, but the table is joined with itself.
+    - Example:
+        ```
+        SELECT column_name(s)
+        FROM table1 T1, table1 T2
+        WHERE condition;
+        ```
 
 
 ## ActiveRecord
