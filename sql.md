@@ -69,8 +69,8 @@
 
 
 
-- SQL
-    - Example of the order of execution of a Query
+## SQL
+- Order of execution of a Query
 
     ```
     Complete SELECT query
@@ -85,29 +85,39 @@
         LIMIT count OFFSET COUNT;
     ```
 
-    - SQL JOINs
-        - INNER JOIN (I think by default, a JOIN is INNER JOIN)
-            - produces only a set of records that match in both Table A and B. Does not return any records with NULL
-        - FULL OUTER JOIN 
-            - produces the set of all records in Table A and Table B, with matching records from both sides where available. If there is no match, the missing side will contain NULL.
-            - To produce the set of records unique to Table A and Table B, we perform the same full outer join, then **exclude the records we don't want from both sides via a where clause** (i.e. TableA.id IS NULL OR TableB.id IS NULL)
-        - LEFT OUTER JOIN 
-            - produces a complete set of records from Table A, with the matching records (where available) in Table B. If there is no match, the right side will contain NULL.
-            - use WHERE clause to exclude records we don't want in Table B (i.e. TableB.id IS NOT NULL, TableB.id IS NULL)
-        - RIGHT OUTER JOIN
-            - produces a complete set of records from Table B, with the matching records (where available) in Table A. If there is no match, the right side will contain NULL.
-            - use WHERE clause to exclude records we don't want in Table B (i.e. TableA.id IS NOT NULL, TableA.id IS NULL)
-        - This excellent [article](https://blog.codinghorror.com/a-visual-explanation-of-sql-joins/) explains JOINS very well.
+### SQL JOINs
+- INNER JOIN (I think by default, a JOIN is INNER JOIN)
+    - produces only a set of records that match in both Table A and B. Does not return any records with NULL
+- FULL OUTER JOIN 
+    - produces the set of all records in Table A and Table B, with matching records from both sides where available. If there is no match, the missing side will contain NULL.
+    - To produce the set of records unique to Table A and Table B, we perform the same full outer join, then **exclude the records we don't want from both sides via a where clause** (i.e. TableA.id IS NULL OR TableB.id IS NULL)
+- LEFT OUTER JOIN 
+    - produces a complete set of records from Table A, with the matching records (where available) in Table B. If there is no match, the right side will contain NULL.
+    - use WHERE clause to exclude records we don't want in Table B (i.e. TableB.id IS NOT NULL, TableB.id IS NULL)
+- RIGHT OUTER JOIN
+    - produces a complete set of records from Table B, with the matching records (where available) in Table A. If there is no match, the right side will contain NULL.
+    - use WHERE clause to exclude records we don't want in Table B (i.e. TableA.id IS NOT NULL, TableA.id IS NULL)
+- This excellent [article](https://blog.codinghorror.com/a-visual-explanation-of-sql-joins/) explains JOINS very well.
+
+### Additional SQL functions
+- COALESCE (a PostgreSQL function)
+    - accepts an unlimited number of arguments. It returns the first argument that is not null. If all arguments are null, the COALESCE function will return null.
+    - evaluates arguments from left to right until it finds the first non-null argument. All the remaining arguments from the first non-null argument are not evaluated.
+
+- CASE (a PostgreSQL conditional expression)
+    - 
 
 
-- ActiveRecord
-    - All models in Rails inherit from ActiveRecord
-    - an ORM (object relational mapping), allows us to represent data from a DB as Ruby objects
-    - contains a number of methods to implement basic CRUD functionalities and SQL queries.
-    - Has built in caching
+
+
+## ActiveRecord
+- All models in Rails inherit from ActiveRecord
+- an ORM (object relational mapping), allows us to represent data from a DB as Ruby objects
+- contains a number of methods to implement basic CRUD functionalities and SQL queries.
+- Has built in caching
 
     - Lazy-loading
-        - Querying methods like group, having, includes, joins, select and where return an object of type ActiveRecord::Relation. The `Relation` object is array-like, and can be iterated through or indexed into.
+        - Querying methods like `group, having, includes, joins, select` and `where` return an object of type ActiveRecord::Relation. The `Relation` object is array-like, and can be iterated through or indexed into.
         - HOWEVER, the `Relation` is not fetched until we actually need the results and the query is fired. This is why ActiveRecord queries are lazy.
 
         ```
@@ -123,6 +133,13 @@
         - Benefits of laziness is that you can build complex queries by chaining query methods, which are not executed until it is finished being built and evaluated.
         - However, you can force querying a Relation by using load() or count().
 
+    - Useful Query Commands 
+        - pluck 
+            - returns an array instead of an ActiveRecord::Relation object, like `select`. 
+            - converts a DB query into a Ruby array without needed to first construct an ActiveRecord::Relation. 
+            - downside of this is that you cannot chain standard ActiveRecord queries to `pluck`. But you can first chain ActiveRecord queries, then append `pluck` afterwards.
+            
+
 - N+1 queries
     - Lets say you want the **number** of comments per post by a User. You make 1 query to find the users post, and N queries by iterating through posts to find all of its comments.
     - This is very inefficient if you consider a User having 10,000 posts. You'd be making 10,000 queries!
@@ -132,8 +149,8 @@
         - prefetching data using associations and .includes(). For example: `posts = user.posts.includes(:comments)`. This allows you to fetch all comments of all posts in one go, rather than query one-by-one per post.
         - Best to use eager loading an association if you plan to use those associated records, and not "aggregate" them.
     - Option 2: Joining Tables
-        - eager loading returns lots of data, which is unnecessary if all you want is the number of comments.
-        - When we want to use aggregate functions (i.e. MIN(), MAX(), COUNT(), AVG(), SUM()) with the associated records, like getting the sum of comments (and don't care about the comments themselves), use .joins().
+        - eager loading returns lots of data, which is unnecessary if all you want is the number of comments...
+        - Use joins if for example, when we want to use aggregate functions (i.e. MIN(), MAX(), COUNT(), AVG(), SUM()) with the associated records, like getting the sum of comments (and don't care about the comments themselves), use .joins().
 
 
 ### Additional Notes: psql commands

@@ -9,9 +9,34 @@
 
 ## CI CD
 ## W1D2, Tuesday, April 20th, 2018
-- Steps implemented
-- Create and setup AWS EC2 (Elastic Cloud Computing) instance to use as our CI/CD server
-- Launching EC2 instances are essentially remote web servers.
+
+##E What is AWS EC2?
+- EC2 stands for Elastic Cloud Computing, and is a web service provided by Amazon to create and launch a remote web server. In short, EC2 instances are essentially remote web servers.
+- When launching an EC2 instance on AWS, a SSH key-pair is created to grant you access to the instances you create
+
+
+### What does the CI pipeline look like?
+- source control (i.e. Git) -> run tests (i.e. frontend and backend) -> build artifacts (i.e. production js files, build rails assets) -> publish artifacts (i.e. publish test results to dashboard) -> trigger deploy (i.e. using OpsWorks)
+- CI gets triggered when source code is committed, code enters CI pipeline and runs our tests. Then, code either gets deployed or log the failed test cases. 
+
+
+### Overall summary of what I did to set up AWS EC2 instance to use as our CI/CD server 
+- Followed pre-defined instructions to create a EC2 instance on AWS.
+- Selected an Ubuntu server. Configure Security Group by adding a rule, and changing port range to 8080 
+
+###Once EC2 instance is launched and running...
+- Logged into the VPC by running a bunch of bash commands using the SSH key pair provided when creating the EC2 instance.
+- The bash commands essentially gave my local machine access to "SSH" into the remote EC2 instance using the key-pair.
+- Installed Jenkins and ran steps to ensure Jenkins can be launched in port 8080.
+
+### Next...
+- Ran more commands in SSH'd terminal, and installed RVM, Postgres, and Heroku.
+- RVM stands for Ruby Version Manager and allows you to work with multiple Ruby versions.
+
+### Configure Jenkins
+- Purpose of this step is to make sure that Jenkins server properly installs all the Ruby and JS dependencies. 
+- In other words, the Jenkins environment needs to be able to run Ruby/JS code, downloads, and bundles all its dependencies 
+- By the end of this step, Jenkins should be connected to Github and deployed Heroku app. If so, then Jenkins can run scheduled deployments and tests when source code is committed.
 
 
 ## AWS RDS
@@ -27,12 +52,27 @@
     - Reading data takes log(n) time, but worst case is O(n). When writing data, re-balancing BST using AVL takes log(n) time.
 
 ### Wait, a hash has faster lookup time than a BST. So why do we use a BST instead of a hash?
-- Yes, a hash has a faster lookup time than a BST. A hash is O(1) lookup, and BST is log(n) lookup. However, a hash is not in order, so it doesn't suit well for searches, but are great for caching when using Memcached or Redis.
+- Yes, a hash has a faster lookup time than a BST. A hash is O(1) lookup, and BST is log(n) lookup. However, **a hash is not in order, so it doesn't suit well for searches, but are great for caching when using Memcached or Redis**.
 - Whenever a new record is added, the btree needs to re-balance itself, and uses AVL, an auto-balancing BST algorithm.
 
 
 ### How do you improve DB performance?
-- **Add `explain analyze` in front of a coplex query and the query plan will display, showing the time it takes to execute each query being made. This does not execute the query.**
+- **Add `EXPLAIN ANALYZE` in front of a complex query and the query plan will display, showing the time it takes to execute each query being made. This does not execute the query.**
+- EXPLAIN ANALYZE checks the accuracy of the estimates provided by EXPLAIN.
+- Under Query Plan, things to look for is the difference in rows that need to be traversed when comparing estimate vs actual. In practical cases, it's not usually the same.  
+- By adding a simple WHERE clause, the output rows can be decreased, but all 10,000 rows still need to be visited. In fact, the estimated cost to execute query increases a little. This is because it costs extra CPU time to check WHERE condition. 
+
+- Query Plan executes the following:
+    - cost
+        - Estimated start-up cost. This is the time expended before the output phase can begin, e.g., time to do the sorting in a sort node.
+        - Estimated total cost. Assuming that the plan node is run to completion, i.e., all available rows are retrieved.
+    - rows
+        - Estimated number of rows output by this plan node. Again, the node is assumed to be run to completion.
+    - width
+        - Estimated average width of rows output by this plan node (in bytes)
+
+- Also, try .explain after an ActiveRecord query in Rails >= 4. Provides a query plan as well. 
+- For more info about this awesome command, see [EXPLAIN and EXPLAIN ANALYZE](https://www.postgresql.org/docs/9.5/static/using-explain.html)
 
 
 ### What are some ways to scale a DB?
