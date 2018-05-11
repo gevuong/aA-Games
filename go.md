@@ -4,7 +4,7 @@
 - Docker and Kubernetes container systems were built using Go, and so is teamtreehouse's workspace.
 
 ### Go's Goal
-- fast build, fast compilation time.
+- fast build, fast compilation that's compatible with Windows, Mac, or Linux.
 - fast execution. The executables are native binaries, meaning there's no need for user's to download a separate runtime. 
 - supports concurrency, meaning Go can take full advantage of multi-core computer processors
 - supports garbage collection, which means Go automatically frees unused memory rather than explicitly writing code to free memory
@@ -21,3 +21,8 @@
 
 ### Initial Challenges w/ Go
 - Setting up the go workspace to your desired directory other than $HOME (which in my case is /Users/GeorgeV.) 
+
+### Useful commands to run in CLI
+- go build hello.go (compiles code and creates an executable binary file called, "hello")
+- ./hello to run executable
+- go run hello.go (compiles code and runs executable file in one command without the need to store an executable binary file). This prevents the need to make a bunch of executable files
