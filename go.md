@@ -20,9 +20,13 @@
 - no function overloading, meaning you cannot create multiple versions of a fcn with different parameters.
 
 ### Initial Challenges w/ Go
-- Setting up the go workspace to your desired directory other than $HOME (which in my case is /Users/GeorgeV.) 
+- Setting up the go workspace to your desired directory other than $HOME (which in my case is /Users/GeorgeV.), using $GOPATH.
 
 ### Useful commands to run in CLI
 - go build hello.go (compiles code and creates an executable binary file called, "hello")
 - ./hello to run executable
 - go run hello.go (compiles code and runs executable file in one command without the need to store an executable binary file). This prevents the need to make a bunch of executable files
+
+- echo $GOPATH
+- running "go get url_path" downloads the github package for us. For example, "go get github.com/golang/example/stringUtil" will download the stringUtil package.
+- go run "filename"
