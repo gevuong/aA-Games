@@ -24,19 +24,50 @@
 
 ### What are some very useful GO commands I should know?
 1. ```go run <insert_filename>``` - compiles code and runs executable file in one command without the need to store an executable binary file. This prevents the need to make a bunch of executable files. You can compile and execute a handful of files in one command 
-    - For example: ```go run first_file.go second_file.go third_file.go```
+    - For example: 
+    ```
+    go run first_file.go second_file.go third_file.go
+    ```
+
 2. ```go build <insert_filename>``` - compiles code and creates an executable binary file named after your filename
-    - For example: ```go build main.go``` creates a executable called ```main``` 
-    - To run executable file, simply run ```./main```
+    - For example: ```go build hello_world.go``` creates a executable called ```hello_world``` 
+    - To run executable file, simply run ```./hello_world```
 3. ```go fmt``` - formats all code in each code in current directory
-4. ```go install``` - compiles and installs a package
-5. ```go get``` - downloads raw source code of someone else's package
-6. ```go test``` - runs any test associated with current package
+4. ```go install``` - compiles and installs a package, handles dependencies
+5. ```go get <insert_url_path>``` - downloads raw source code of someone else's package, handles dependencies. 
+    - For example: 
+    ```
+    // to download the stringUtil package
+    go get github.com/golang/example/stringUtil 
+    ```
 
-- echo $GOPATH
-- running "go get insert_url_path_here" downloads the github package for us. For example, "go get github.com/golang/example/stringUtil" will download the stringUtil package.
+6. ```go test``` - runs any test files associated with current package
 
-## Do you have initial challenges w/ setting up Go? Me too.
+### What does "package main" mean?
+- There are two types of packages: executable packages, and reusable packages. 'main' is an executable package, meaning it is a package that can be compiled, and then "executed". However, **you must have function called "main"**, which is ran automatically when the program runs. For example, if your code has ```package apple```, and you run ```go build hello_world.go```, an executable will not be created.
+- In other words, 'main' is the special name used for a package to tell Go that we want it to be turned into an executable file.
+- Reusable packages are essentially packages that can be used as a dependency (helper code)
+- The purpose of a package is to group together code with a similar purpose.
+
+### What does 'import "fmt"' mean?
+- import statements are used to gain access to another package inside the one we are authoring.
+
+### How should a .go file be organized?
+- First, always place package declaration
+- Next, list all other packages we may need to import in this file
+- Finally, add body of the file to implement logic that does something
+
+### Basic, Fundamental Go Types 
+- bool
+- string
+- int 
+- float64 (i.e. number with a decimal after it)
+
+### Things you need to know about types
+- Variables must first be initialized with the ':=' operator or the 'var variableName type' syntax before variable can be assigned to a value.
+
+
+## Having trouble setting up Go? The following may be helpful.
 - Setting up the go workspace to your desired directory other than $HOME (which in my case is /Users/GeorgeV.), using $GOPATH.
 
 ### After installing latest version, my go version is still set to the older version in CLI. What do I do?
