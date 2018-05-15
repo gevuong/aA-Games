@@ -15,7 +15,7 @@
 - supported by Google App Engine, which gives you an easy way to deploy and scale web apps.
 
 ### What does Go not have?
-- no class inheritance 
+- Go is not an object-oriented programming language like Ruby, Python, or Java. So there's no idea of classes, or class inheritance. Instead, you create custom type declarations or use existing ones, and extend its functionality. This is the key difference between OOP approach and Go's approach.
 - no exceptions
 - no function overloading, meaning you cannot create multiple versions of a fcn with different parameters.
 
@@ -62,6 +62,9 @@
 - string
 - int 
 - float64 (i.e. number with a decimal after it)
+- map
+- array
+- You can actually take an existing type (i.e. slice of string: []string), and extend its functionality by declaring a custom type (i.e. type deck []string). This is Go's approach, so this new deck type we're creating, extends, or kind of borrows all the behaviors of a slice of string (i.e. [] string). Similar to OOP approach, you define functions (i.e. instance methods) within classes to extend a class' functionality. In Go, with your custom type declaration, you can create your own custom functions that only work with that type. This is similar to instance methods only working with its respective class in OOP approach. This is the key difference between OOP approach and Go's approach.
 
 ### Types in Go
 - Types need to be declared in Go. This is important for statically-typed languages, like C++, Java, and Go. Dynamically-typed languages, such as JavaScript, Ruby, and Python, does not care what values are being assigned to variables.
@@ -106,7 +109,34 @@
 ### Arrays in Go 
 - There are two basic data structures to handle list of records: array and slice. 
 - An array is a fixed length of records. A slice is an array that can grow or shrink, meaning you can add or subtract records to a slice.
-- However, every element in a slice must be of same type (i.e. string, int)
+- **every element in a slice must be of same type (i.e. string, or int)**. Cannot have both values of type "int" and of type "string" in a slice.
+- Slice is zero-indexed. To select a range in a slice, ```fruits[0:2]```, where 2 is exclusive. 
+    - ```fruits[:2]``` - Go interprets this as start from the beginning of slice. 
+    - ```fruits[2:]``` - Go interprets this as start at index 2 and include remaining elements in slice.
+
+### Receiver Functions
+- Similar to instance methods in OOP. 
+- By creating a new type with a function that has a receiver, we are adding a 'method' to any value of that type.
+- This means that any variable of type "deck" now gets access to print method. What does "d deck" mean? d is the variable containing copy of deck that can be used within function,  If you still don't get it, in main.go, "cards" is essentially the d variable in this case. "deck" is the type that we want to attach the print() method to.
+- You can think of the receiver argument as "this" in Python or "self" in Ruby.
+- By Go convention, call receiver argument the first letter of its type. So if you're writing a receiver function for type deck, then call receiver argument, "d".
+- For example, this should print "Harry Potter". "b" represents the value of type "book": 
+    ```
+        package main
+
+        import "fmt"
+
+        type book string
+
+        func (b book) printTitle() {
+            fmt.Println(b)
+        }
+
+        func main() {
+            var b book = "Harry Potter" // initializing and declaring variable, not using shorthand := syntax
+            b.printTitle()
+        }
+    ```
 
 ### Loops in Go
 - Code will not compile successfully if every declared variable is not used in our code. This means that if in the following example, index variable is not used, you will get a "index declared and not used" error.
@@ -119,6 +149,7 @@
     ```
 
 - We're using ':=' syntax because for each iteration, we're basically throwing away previous idx and card that had been initialized and declared. So we need to re-initialize and re-declare those variables.
+
 
 
 ## Having trouble setting up Go? The following may be helpful.
