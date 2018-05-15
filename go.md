@@ -63,15 +63,70 @@
 - int 
 - float64 (i.e. number with a decimal after it)
 
-### Things you need to know about types
-- Variables must first be initialized with the ':=' operator or the 'var variableName type' syntax before variable can be assigned to a value.
+### Types in Go
+- Types need to be declared in Go. This is important for statically-typed languages, like C++, Java, and Go. Dynamically-typed languages, such as JavaScript, Ruby, and Python, does not care what values are being assigned to variables.
+- Variables must first be initialized with the 'var variableName type' syntax before variable can be assigned to a value. 
+- To initialize and assign variable, use ':=' operator for shorthand notation. **Use := syntax ONLY when defining a new variable!** 
+    For example:
+        ```
+            var card string = "Ace of Spades"
+            // which is equivalent to 
+            card := "Ace of Spades
+        ```
+
+- Every function that returns a value needs to indicate what type of value it is returning. In this case, the function returns a type string.
+    - For example:
+        ```
+        func newCard() string {
+            return "Five of Diamonds"
+        }
+        ```
+
+- Files in the same package can call functions defined in other files. This means running ```go run main.go state.go``` OR ```go run state.go main.go``` will work
+    - For example:
+        ```
+            In main.go:
+            package main
+            
+            func main() {
+                printState()
+            }
+
+
+            In a separate file called state.go:
+            package main
+            
+            import "fmt"
+            
+            func printState() {
+                fmt.Println("California")
+            }
+        ```
+
+### Arrays in Go 
+- There are two basic data structures to handle list of records: array and slice. 
+- An array is a fixed length of records. A slice is an array that can grow or shrink, meaning you can add or subtract records to a slice.
+- However, every element in a slice must be of same type (i.e. string, int)
+
+### Loops in Go
+- Code will not compile successfully if every declared variable is not used in our code. This means that if in the following example, index variable is not used, you will get a "index declared and not used" error.
+- For example:
+    ```
+        colors := []string{"red", "green", "blue}
+        for index, color := range colors {
+            fmt.Println(index, color)
+        }
+    ```
+
+- We're using ':=' syntax because for each iteration, we're basically throwing away previous idx and card that had been initialized and declared. So we need to re-initialize and re-declare those variables.
 
 
 ## Having trouble setting up Go? The following may be helpful.
-- Setting up the go workspace to your desired directory other than $HOME (which in my case is /Users/GeorgeV.), using $GOPATH.
+- Use VSCode to write Go programs. Go to extensions and install Go. It should have over 3.3 million downloads. 
+- Next, restart VSCode, and create a .go file. Click on "Missing Analysis Tools" and install all the missing tools.
 
 ### After installing latest version, my go version is still set to the older version in CLI. What do I do?
-Run the following commands in CLI:
+Try the following commands in CLI:
 1. go version (see current version)
 2. brew update 
 3. brew upgrade golang
