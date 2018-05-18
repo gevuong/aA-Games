@@ -138,6 +138,64 @@
         }
     ```
 
+### Functions, examples:
+- Example 1: title and pages will be a value and type of "War and Peace" and string, and 1000 and int, respectively. 
+    ```
+    func getBookInfo() (string, int) {
+        return "War and Peace", 1000
+    }
+    
+    title, pages := getBookInfo()
+    ```
+
+- The following example returns "red" "yellow" "blue
+    ```
+    package main
+ 
+    import "fmt"
+    
+    func main() {
+        color1, color2, color3 := colors()
+    
+        fmt.Println(color1, color2, color3)
+    }
+    
+    func colors() (string, string, string) {
+        return "red", "yellow", "blue"
+    }
+    ```
+
+- Example 2: returns "Red is an awesome color". How would you explain the 'describe' function below? Well, 'describe" is a function that has a receiver of type 'color' that requires an argument of type 'string', and returns a value of type 'string'.
+    ```
+        package main
+        
+        import "fmt"
+        
+        func main() {
+        c := color("Red")
+        
+        fmt.Println(c.describe("is an awesome color"))
+        }
+        
+        type color string
+        
+        func (c color) describe(description string) (string) {
+        return string(c) + " " + description
+        }
+    ```
+
+- Example 3: After calling "deal" and passing in "cards", does the list of strings that the "cards" variable point at change?  In other words, did we modify the 'cards' slice by calling 'deal'? We created two new references that point at subsections of the 'cards' slice. We never directly modified the slice that 'cards' is pointing at.
+    ```
+        func main() {
+            cards := newDeck()
+        
+            hand, remainingCards := deal(cards, 5)
+        
+            hand.print()
+            remainingCards.print()
+        }
+    ```
+
 ### Loops in Go
 - Code will not compile successfully if every declared variable is not used in our code. This means that if in the following example, index variable is not used, you will get a "index declared and not used" error.
 - For example:

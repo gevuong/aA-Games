@@ -1,4 +1,4 @@
-# 2-Week Intro to DevOps
+# Intro to DevOps
 
 ## Table of Contents
 - *[CI/CD](#ci-cd)* (under construction)
@@ -51,7 +51,7 @@
 - Providing additional indices increases read speed, but slows write speed. How?
     - Reading data takes log(n) time, but worst case is O(n). When writing data, re-balancing BST using AVL takes log(n) time.
 
-### Wait, a hash has faster lookup time than a BST. So why do we use a BST instead of a hash?
+### Wait, but a hash has faster lookup time than a BST. So why do we use a BST instead of a hash?
 - Yes, a hash has a faster lookup time than a BST. A hash is O(1) lookup, and BST is log(n) lookup. However, **a hash is not in order, so it doesn't suit well for searches, but are great for caching when using Memcached or Redis**.
 - Whenever a new record is added, the btree needs to re-balance itself, and uses AVL, an auto-balancing BST algorithm.
 
@@ -107,8 +107,8 @@
 - Berkshelf is one particular public cookbook repo, and its usage installs the Berkshelf client on your node.
 - But why Berkshelf?? I'm not sure, but in this case, we're using Berkshelf.
 
-- Berksfile contains only the location to the public Chef cookbook repos available in the, wait for it... Chef Supermarket, lol...
-- Dependencies are listed in metadata.rb and run ```berks vendor ..```  in ```cookbooks/my_cookbook``` directory to properly download cookbooks locally.
+- Berksfile contains only the location to the public Chef cookbook repos available in the, wait for it...Chef Supermarket, lol...
+- Dependencies are listed in metadata.rb and run ```berks vendor ..``` in ```cookbooks/my_cookbook``` directory to properly download cookbooks locally.
 
 
 ### Ok, so how does AWS OpsWorks come into this discussion?
