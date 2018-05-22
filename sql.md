@@ -173,12 +173,17 @@
 
 ### Additional Notes: psql commands
 - Steps to create a DB and Table using CLI
-    - login user in psql: `psql postgres` or `psql GeorgeV.` Once logged in CLI should be `#postgres` or `#GeorgeV.`
-    - to create database: CREATE DATABASE <insert_db_name>
-    - to list databases: \l
-    - to access database: psql <insert_db_name>
-    - to create table: CREATE TABLE <insert_table_name> 
-
+    - log in to postgres or a database, run `psql <insert postgres or database_name>`: 
+        For example: 
+            `psql postgres`, `psql GeorgeV.` , or `psql map_my_tour_development`. 
+    - once logged in, CLI should appear as `#postgres`, `#GeorgeV.`, or `map_my_tour_development`
+    - to create database: `CREATE DATABASE <insert_db_name>`
+    - to list databases: `\l`
+    - to access database: `psql <insert_db_name>`
+    - to access table: `\d <insert table_name>`
+    - to list all tables: `\d`
+    - to exit psql CLI: `\q`
+    - to create table, the following is an example:
         ```
                     CREATE TABLE COMPANY(
             ID INT PRIMARY KEY     NOT NULL,
@@ -188,8 +193,10 @@
             SALARY         REAL
             );
         ```
-
-        For more info: https://www.tutorialspoint.com/postgresql/postgresql_create_table.htm
-
-    - to list all tables: \d
-    - to exit psql CLI: \q
+    - For more info: https://www.tutorialspoint.com/postgresql/postgresql_create_table.htm
+    
+- If all else fails with trying to seed data, I would run the following:
+    1. rake db:drop // DROP TABLES
+    2. rake db:create // create the database without running the migrations:
+    3. rake db:migrate
+    4. rake db:seed
