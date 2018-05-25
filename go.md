@@ -138,8 +138,8 @@
         }
     ```
 
-### Functions, examples:
-- Example 1: title and pages will be a value and type of "War and Peace" and string, and 1000 and int, respectively. 
+### Functions can return multiple values. Here are some examples:
+- Example 1: title and pages will be a value and type of "War and Peace" and string, and 1000 and int, respectively. (string, int) specifies the type of each return value
     ```
     func getBookInfo() (string, int) {
         return "War and Peace", 1000
@@ -184,7 +184,7 @@
         }
     ```
 
-- Example 3: After calling "deal" and passing in "cards", does the list of strings that the "cards" variable point at change?  In other words, did we modify the 'cards' slice by calling 'deal'? We created two new references that point at subsections of the 'cards' slice. We never directly modified the slice that 'cards' is pointing at.
+- Example 3: After calling "deal" and passing in "cards", does the list of strings that the "cards" variable point at change?  In other words, did we modify the 'cards' slice by calling 'deal'? We created two new references that point at subsections of the 'cards' slice. We never directly modify the slice that 'cards' is pointing at. So the answer is no, 'cards' will be the same before and after calling 'deal'.
     ```
         func main() {
             cards := newDeck()
@@ -195,6 +195,7 @@
             remainingCards.print()
         }
     ```
+
 
 ### Loops in Go
 - Code will not compile successfully if every declared variable is not used in our code. This means that if in the following example, index variable is not used, you will get a "index declared and not used" error.
@@ -209,6 +210,45 @@
 - We're using ':=' syntax because for each iteration, we're basically throwing away previous idx and card that had been initialized and declared. So we need to re-initialize and re-declare those variables.
 
 
+### What is a Byte Slice, or []byte?
+- Well, a slice is like an array, where every element corresponds to an ASCII character code. You can go to asciitable.com, and turn a byte slice into a string.
+- In other words, a byte slice is a computer-friendly way of representing strings
+- For example:
+    ```
+    package main
+    import "fmt"
+    func main() {
+        greeting := "Hi there!"
+        fmt.Println([]byte(greeting)) // returns [72 105 32 116 104 101 114 101 33]
+    }
+    ```
+
+
+### Type Conversion (i.e. converting type deck to a string)
+- Example of how to convert a type 'deck' to type 'string' by using []string: 
+    ```
+        func (d deck) toString() string {
+            return strings.Join([]string(d), ",")
+        }
+
+        // this line of code makes the conversion: []string(d)
+    ```
+
+- Example of how to convert a type 'string' to byte slice:
+    ```
+        func (d deck) saveToFile(filename string) error {
+            return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
+        }
+
+        // this line of code makes the conversion: []byte(d.toString()). The toString() refers to the example above.
+    ```
+
+
+### Testing in Go
+- It is not like RSpec, Mocha, Jasmine, Selenium, etc. In Go, we use a very small interface or small set of functions to actually test our code, unlike other testing frameworks previously mentioned.
+- Create a new file in our directory ending in `_test.go`. (i.e. `deck_test.go`)
+- To run tests in a package, run the following command: `go test`
+- Ask yourself before deciding what tests to write, "What do I really care about when looking at this function?" 
 
 ## Having trouble setting up Go? The following may be helpful.
 - Use VSCode to write Go programs. Go to extensions and install Go. It should have over 3.3 million downloads. 
