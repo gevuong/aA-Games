@@ -2,6 +2,7 @@
 - Can compile into executables that are compatible with Windows, Mac, or Linux without making any changes to your code. 
 - Users won't need to install interpreters or virtual machines or anything to use Go app. Just give them a single executable file to run software.
 - Docker and Kubernetes container systems were built using Go, and so is teamtreehouse's workspace.
+- A pass-by-value language. More info of what this means below.
 
 ### Go's Goal
 - fast build, fast compilation that's compatible with Windows, Mac, or Linux.
@@ -9,10 +10,12 @@
 - supports concurrency, meaning Go can take full advantage of multi-core computer processors
 - supports garbage collection, which means Go automatically frees unused memory rather than explicitly writing code to free memory
 
-### Hm, Go sounds pretty awesome right about now, but when would I want to use Go?
+
+### Hm, ok, Go sounds pretty awesome about now, but when would I want to use Go?
 - web services, since Go can handle a lot of operations at once. 
 - any host that allows binary executables, like most commercial web hosts.
 - supported by Google App Engine, which gives you an easy way to deploy and scale web apps.
+
 
 ### What does Go not have?
 - Go is not an object-oriented programming language like Ruby, Python, or Java. So there's no idea of classes, or class inheritance. Instead, you create custom type declarations or use existing ones, and extend its functionality. This is the key difference between OOP approach and Go's approach.
@@ -20,9 +23,9 @@
 - no function overloading, meaning you cannot create multiple versions of a fcn with different parameters.
 
 
-## Ok. With a bit of context, are you ready to Go? If so, continue on.
+## Ok. With this bit of context, are you ready to, Go? If so, continue on.
 
-### What are some very useful GO commands I should know?
+### What are some useful commands I should know?
 1. ```go run <insert_filename>``` - compiles code and runs executable file in one command without the need to store an executable binary file. This prevents the need to make a bunch of executable files. You can compile and execute a handful of files in one command 
     - For example: 
     ```
@@ -248,7 +251,342 @@
 - It is not like RSpec, Mocha, Jasmine, Selenium, etc. In Go, we use a very small interface or small set of functions to actually test our code, unlike other testing frameworks previously mentioned.
 - Create a new file in our directory ending in `_test.go`. (i.e. `deck_test.go`)
 - To run tests in a package, run the following command: `go test`
-- Ask yourself before deciding what tests to write, "What do I really care about when looking at this function?" 
+- To decide what tests to write, it's up to you as the developer to say, "What do I really care about when looking at this function or class?"
+- Make sure to take care of any "clean up" when writing tests with Go. The Go testing framework does not  detect that you wrote some file and automatically attempt to "clean it up" for you by removing temporary testing file.
+
+
+## Structs in Go
+- Similar to a plain object in JavaScript, a hash in Ruby, a dictionary in Python.
+- There are three ways of creating a struct.
+    ```
+    package main
+
+    import "fmt"
+
+    type person struct {
+        firstName string
+        lastName  string
+    }
+
+    // One method to declare a struct, implicit order:
+    func main() {
+        alex := person{"Alex", "Anderson"}
+        fmt.Println(alex)
+    }
+
+    // Second (preferred) method to declare a struct:
+    func main() {
+        alex := person{firstName: "Alex", lastName: "Anderson"}
+        fmt.Println(alex)
+    }
+
+    // Third method to declare a struct to have zero values in place:
+    func main() {
+        var alex person
+
+        alex.firstName = "Alex"
+        alex.lastName = "Anderson"
+
+        fmt.Println(alex)
+        fmt.Printf("%+v", alex)
+    }
+    ```
+
+- The default values of different types are called zero values: "" - string, 0 - int, 0 - float, false - boolean.
+- You can embed one struct inside of another struct. Here's an example:
+
+    ```
+    package main
+
+    import "fmt"
+
+    // custom type declarations person and
+    type person struct {
+        firstName string
+        lastName  string
+        contact   contactInfo
+    }
+
+    type contactInfo struct {
+        email   string
+        zipCode int
+    }
+
+    // Third method to declare a struct to have zero values in place:
+    func main() {
+        jim := person{
+            firstName: "Jim",
+            lastName:  "Party",
+            contact: contactInfo{
+                email:   "jim@gmail.com",
+                zipCode: 94123,
+            },
+        }
+
+        fmt.Println(jim)
+        fmt.Printf("%+v", jim)
+    }
+    ```
+
+## Go is a pass-by-value language. But what does that mean?
+- **Whenever we pass a value into a fcn, either as a receiver or as an argument, Go copies that value in memory, and then the copy is made available inside the fcn. This means that the fcn by default will always work with a copy of the data structure.** 
+- However, you can modify the actual underlying data structure through the use of pointers and memory addresses. 
+- In the example below, when you pass the name "jim" into updateName(), Go first made a copy of that struct, and then the copy was made available to the updateName fcn. This meant that changes to the name did not propagate to the original "jim" struct. 
+
+    ```
+    package main
+
+    import "fmt"
+
+    // custom type declarations person and contactInfo
+    type person struct {
+        firstName   string
+        lastName    string
+        contactInfo // equivalent to contactInfo contactInfo
+    }
+
+    type contactInfo struct {
+        email   string
+        zipCode int
+    }
+
+    func main() {
+        jim := person{
+            firstName: "Jim",
+            lastName:  "Party",
+            contactInfo: contactInfo{
+                email:   "jim@gmail.com",
+                zipCode: 94123,
+            },
+        }
+
+        jim.updateName("jimmy")
+        jim.print()
+    }
+
+    func (p person) updateName(newFirstName string) {
+        p.firstName = newFirstName
+    }
+
+    // receiver fcn that accepts a receiver of type person, which is an extension of type struct
+    func (p person) print() {
+        // fmt.Println(p)
+        fmt.Printf("%+v", p)
+    }
+    ```
+
+- &variable: give me the memory address of the value the variable is pointing at
+- *pointer: give me the value this memory address is pointing at
+
+- *pointer vs *type both are two completely different things. 
+    - Whenever we see a *type in the receiver, we are looking for a pointer to said type. In example below, *person means we are looking for a pointer to a type person. 
+    - *pointer takes the pointer and turns it into an actual value. We use *pointer when we want to manipulate the value the pointer is referencing. 
+
+    - There are two different types of variables: one is pointing at a memory address, the other is pointing at a value, like jim struct. So here's the rule to remember:
+        - **Turn address into value with *address** ex: *pointerToPerson turns a memory address, or pointer, in this case, jimPointer, into a value of jim struct.
+        - **Turn value into address with &value**, ex: &jim turns value of jim into a pointer or memory address.
+
+    - Example below: 
+    ```
+    package main
+
+    import "fmt"
+
+    // custom type declarations person and contactInfo
+    type person struct {
+        firstName   string
+        lastName    string
+        contactInfo // equivalent to contactInfo contactInfo
+    }
+
+    type contactInfo struct {
+        email   string
+        zipCode int
+    }
+
+    func main() {
+        jim := person{
+            firstName: "Jim",
+            lastName:  "Party",
+            contactInfo: contactInfo{
+                email:   "jim@gmail.com",
+                zipCode: 94123,
+            },
+        }
+
+        // Use `&` operator to turn &jim into a memory address, or pointer, and assign it to jimPointer, the variable, jim, is located, and store in jimPointer. As a result, jimPointer is pointing to the memory address that the jim struct is located, not the value, jim. In short, jimPointer is pointing to a type person, or *person.
+        jimPointer := &jim
+        // fmt.Println(jimPointer)
+        jimPointer.updateName("jimmy")
+        jim.print()
+    }
+
+    // pointerToPerson is the memory address that "jim" is located at. This gives direct access to the value that is stored in that memory address, which is jim struct.
+    func (pointerToPerson *person) updateName(newFirstName string) {
+        (*pointerToPerson).firstName = newFirstName
+    }
+
+    // receiver fcn that accepts a receiver of type person, which is an extension of type struct
+    func (p person) print() {
+        // fmt.Println(p)
+        fmt.Printf("%+v", p)
+    }
+    ```
+
+### In summary, this is what you need to know about Go's pass-by-value concept 
+- Whenever you pass an integer, float, string, or struct into a fcn, Go creates a copy of each argument and these copies are used inside of the fcn.
+
+- The following example will print out the memory address that "Bill" is stored at.
+    ```
+    package main
+    import "fmt"
+    
+    func main() {
+    name := "Bill"
+    
+    fmt.Println(&name)
+    }
+    ```
+
+- The `&` operator is used for turning a value to an address or pointer. When you see a `*` operator in front of a pointer, it will turn the pointer into a value.
+
+- To get the latitude of newYork to update to 41.0, change the receiver type from `location` to `*location`, and `lo` to `*lo` in the fcn body. This will turn the pointer `lo` into a value type and then update it.
+- `*location` in the receiver specifies the type of receiver the fcn expects, and that is a pointer to location struct.
+
+    ```
+    type location struct {
+    longitude float64
+    latitude float64
+    }
+    
+    func main() {
+    newYork := location{
+    latitude: 40.73,
+    longitude: -73.93,
+    }
+    
+    newYork.changeLatitude()
+    
+    fmt.Println(newYork)
+    }
+    
+    func (lo location) changeLatitude() {
+    lo.latitude = 41.0
+    }
+    ```
+
+- The following Println() returns "Bill"
+    ```
+    package main
+    
+    import "fmt"
+    
+    func main() {
+        name := "Bill"
+        updateValue(name)
+        fmt.Println(name)
+    }
+    
+    func updateValue(n string) {
+        n = "Alex"
+    }
+    ```
+
+- The following program uses a shortcut, where Go automatically assumes that even though newYork.changeLatitude() is using a value type, we probably meant to pass in a pointer to the newYork struct.
+    ```
+    package main
+    
+    import "fmt"
+    
+    type location struct {
+    longitude float64
+    latitude float64
+    }
+    
+    func main() {
+    newYork := location{
+    latitude: 40.73,
+    longitude: -73.93,
+    }
+    
+    newYork.changeLatitude()
+    
+    fmt.Println(newYork)
+    }
+    
+    func (lo *location) changeLatitude() {
+    (*lo).latitude = 41.0
+    }
+    ```
+
+
+- The following returns the string "Bill". My guess is that the `&` operator returns the memory address of name, and the `*` operator turns the memory address, or pointer, to the name value, which is "Bill".
+    ```
+    package main
+    
+    import "fmt"
+    
+    func main() {
+        name := "Bill"
+    
+        fmt.Println(*&name)
+    }
+    ```
+
+- The following program will print different addresses because everything in Go is pass by value. Take a glance at the following code snippet, which gets a pointer to name called `namePointer` and prints out the memory address of the pointer itself! Then in the function, we take the pointer that was passed as an argument and print out the address of that pointer too.
+    ```
+    package main
+    
+    import "fmt"
+    
+    func main() {
+    name := "bill"
+    
+    namePointer := &name
+    
+    fmt.Println(&namePointer)
+    printPointer(namePointer)
+    }
+    
+    func printPointer(namePointer *string) {
+    fmt.Println(&namePointer)
+    }
+    ```
+
+### Gotchas in Go
+- The following program actually updates the first string to "Bye". The `mySlice` value is still being copied before being passed into `updateSlice`. Why? A slice is a reference type because a slice contains a reference to the actual underlying list of records. Lets take a look at what I mean by reviewing the difference between an array and a slice. 
+
+    ```
+    package main
+
+    import (
+        "fmt"
+    )
+
+    func main() {
+        mySlice := []string{"Hi", "Bye"}
+        
+        updateSlice(mySlice)
+        fmt.Println(mySlice)
+    }
+
+    func updateSlice(s []string) {
+        s[0] = "Bye"
+    }
+    ```
+
+- An array is a primitive data structure, cannot be resized, and is rarely used directly. A slice can grow and shrink, and is used 99% of the time for list of elements. 
+- When you create a slice, Go internally creates two separate data structures, a slice, which contains the length of slice, capacity of slice, and a pointer to the head of the underlying array which contains the actual list of items, and an array, which contains the list of items.
+- **When you pass a slice in a fcn, Go's pass-by-value still makes a copy of slice. The pointer in the copy of slice points to the head of the same array as the pointer in the original slice. So when you modify the array or slice, you are still modifying the array because both the original and copy slice points to the same array.**
+
+- When you create a slice, Go will automatically create an array and a structure that records the length of slice, capacity of slice, and a reference to the underlying array.
+
+
+### Value Types vs Reference Types 
+- **Value types: int, float, string, boolean, struct. If you pass these types into a fcn, you want to use pointers to change these values in a fcn.**
+- With value types in Go, we need to worry about pointers if we want to pass a value to a fcn and want to modify the original value inside that fcn. With reference types, we do not need to worry about pointers. 
+- **Reference types: slices, maps, channels, pointers, functions. Reference types reference to another data structure in memory. You don't need to worry about pointers with these types because the copy Go makes is always going to be pointing back to the same underyling true source of data.**
+
 
 ## Having trouble setting up Go? The following may be helpful.
 - Use VSCode to write Go programs. Go to extensions and install Go. It should have over 3.3 million downloads. 
