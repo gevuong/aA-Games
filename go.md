@@ -588,6 +588,96 @@
 - **Reference types: slices, maps, channels, pointers, functions. Reference types reference to another data structure in memory. You don't need to worry about pointers with these types because the copy Go makes is always going to be pointing back to the same underyling true source of data.**
 
 
+
+### Map (Reference Type)
+- Equivalent to a hash in Ruby, object in JavaScript, or dictionary in Python.
+- Three ways to declare a map: 
+    ```
+    package main
+
+    import "fmt"
+
+    // create a map with keys and values as strings
+    func main() {
+        // second method to create a map
+        // var colors map[string]string
+
+        // third method to create an empty map with no key value pairs inside
+        colors := make(map[int]string)
+
+        // first method to create a map
+        // colors := map[string]string{
+        // 	"red":   "#ff0000",
+        // 	"green": "00ff00",
+        // }
+
+        // to add a key-val pair to empty map
+        colors[10] = "#ffffff"
+
+        // to remove keys and values off of existing map
+        delete(colors, 10)
+
+        fmt.Println(colors)
+    }
+    ```
+
+- The following program would return `map[dog:bark cat:purr]`. 
+    ```
+    package main
+    import "fmt"
+    
+    func main() {
+    m := map[string]string{
+    "dog": "bark",
+    }
+    
+    changeMap(m)
+    
+    fmt.Println(m)
+    }
+    
+    func changeMap(m map[string]string) {
+    m["cat"] = "purr"
+    }
+    ```
+
+- The following program would throw an error because the variable key was created but never used. 
+    ```
+    package main
+    import "fmt"
+    
+    func main() {
+    m := map[string]string{
+    "dog": "bark",
+    "cat": "purr",
+    }
+    
+    for key, value := range m {
+    fmt.Println(value)
+    }
+    }
+    ```
+
+### Map vs Struct. Here are the differences between the two:
+- Map
+    - all keys must be the same type. Some keys in a single map may not be of type `int` and others of type `string`. This applies with values as well.
+    - all values must be the same type
+    - keys are indexed, we can iterate through all the key-value pairs
+    - a reference type, meaning when we pass a map to a fcn, we are not copying the map, we are copying a reference to the map. In other words, we are passing a reference to the underlying data structure.
+
+- Struct 
+    - values can be of different type, keys are strongly-typed, the key names or property names are predefined
+    - keys don't support indexing, we cannot iterate through all the key-value pairs, or properties. 
+    - a value type, meaning when we pass a struct to a fcn, we make a copy of the entire struct, so when we change the struct, it did not modify the struct created outside of the fcn.
+
+
+### Ok, so when would I want to use a Map or a Struct?
+- Use a map when you want to represent a collection of very closely related properties.
+- With a map, you do not need to know all the keys at compile time. With a map, you can freely add or delete keys over time as you please. With a struct, you need to clearly define all the different property names and all their types at compile time. 
+- So if you don't know what the collection of keys or values are going to be at compile time, then you have a great use case for a map. But if you know that you're always going to be working with certain keys or properties, then you would want to use a struct. 
+
+
+
 ## Having trouble setting up Go? The following may be helpful.
 - Use VSCode to write Go programs. Go to extensions and install Go. It should have over 3.3 million downloads. 
 - Next, restart VSCode, and create a .go file. Click on "Missing Analysis Tools" and install all the missing tools.
