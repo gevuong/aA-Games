@@ -798,6 +798,41 @@
 ## Read and Write in Go 
 - Types that implement the Reader interface are generally used to read information from an outside data source into our application.
 
+
+
+## Channels and Go Routines 
+- When we are launching or executing a Go program, we automatically create one Go routine. It is something that exists inside of our running program or process.
+- A Go Routine executes our code line-by-line.
+- To create a new thread Go routine, simply add `go` in front of the function (i.e. http.Get()).
+
+### But what goes on under the hood when implementing multiple Go routines?
+- Behind the scenes, there is something called a Go scheduler that works with one CPU on your machine. The Go scheduler runs only one routine at any given time until it finishes running a function or makes a blocking call (i.e. http.Get())
+- Purpose of the Go scheduler is to monitor the code inside each Go routine. 
+- So, even though we are spawning multiple Go routines, they are not truly executing at the same time whenever we have one CPU. This one CPU is only running the code of one Go routine at a time, and we rely on the Go scheduler to decide which Go routine is executed.
+- By default, Go uses one CPU core. Keep in mind that when we have one CPU, the Go routine execution might change back and forth between multiple Go routines. 
+- However, if we have multiple CPU cores, then we can run multiple Go routines at the same time.
+- There is a main Go routine, and child Go routines. When we launch the Go program, we are creating a main Go routine. All other Go routines using the `go` keyword are considered child Go routines, and do not have the same level of "respect" as the main Go routine.
+- Only use `go` keyword in front of function calls! 
+
+###Concurrency is not parallelism
+- Concurrency means we can load up (or schedule) multiple Go routines at a time. Our program has the ability to run different Go routines, and change between them, kind of at the same time (or on the fly) with the help of the Go scheduler.
+- Concurrency means we can have multiple threads executing code. If one thread blocks, then another Go routine is picked up and worked on.
+
+- Parallelism is achieved only when we have multiple CPU cores. Multiple threads can be executed at the exact same time, but requires multiple CPUs.
+- Parallelism means we can literally do multiple things (i.e. run multiple Go routines) at the same time.
+
+### Channels 
+- When launching a Go program, the main routine exits when there is no more lines of code to execute, without considering whether any of its child Go routines are finished executing. We need to include a channel to fix this issue.
+- Channels are used to communicate inbetween different running Go routines. It is the only way to communicate between routines. We use a channel to make sure the main routine is aware of which child routine has finished running. 
+- Think of a channel as an intermediary between discussions of routines on our local machine, like text messaging channels. We can send some data to a channel and it automatically get sent to any other **running** routine that has access to that channel.
+- We can create channels as values that can be passed around. Channels are typed, just like any other variable. The information or data that we pass into a channel must all be of the same type (i.e. string, int, etc.) There would be a type error if you shared a float inside a type string or type int inside a channel.
+
+### Sending data with channels
+- `channel <- 5`: send the value '5' into this channel 
+- `myNumber <- channel`: wait for a value to be sent into the channel. When we get one, assign the value to `myNumber`.
+- `fmt.Println(c<- channel)`: wait for the value to be sent into the channel. When we get one, log it out immediately. 
+- **Receiving messages from a channel is blocking line of code!**
+
 ## Having trouble setting up Go? The following may be helpful.
 - Use VSCode to write Go programs. Go to extensions and install Go. It should have over 3.3 million downloads. 
 - Next, restart VSCode, and create a .go file. Click on "Missing Analysis Tools" and install all the missing tools.
