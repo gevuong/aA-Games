@@ -8,7 +8,7 @@
 - fast build, fast compilation that's compatible with Windows, Mac, or Linux.
 - fast execution. The executables are native binaries, meaning there's no need for user's to download a separate runtime. 
 - supports concurrency, meaning Go can take full advantage of multi-core computer processors
-- supports garbage collection, which means Go automatically frees unused memory rather than explicitly writing code to free memory
+- supports garbage collection, which means Go automatically frees unused memory rather than explicitly writing code to free memory.
 
 
 ### Hm, ok, Go sounds pretty awesome about now, but when would I want to use Go?
@@ -45,6 +45,8 @@
     ```
 
 6. ```go test``` - runs any test files associated with current package
+7. Saving the go file will compile the code.
+
 
 ### What does "package main" mean?
 - There are two types of packages: executable packages, and reusable packages. 'main' is an executable package, meaning it is a package that can be compiled, and then "executed". However, **you must have function called "main"**, which is ran automatically when the program runs. For example, if your code has ```package apple```, and you run ```go build hello_world.go```, an executable will not be created.
@@ -804,6 +806,9 @@
 - When we are launching or executing a Go program, we automatically create one Go routine. It is something that exists inside of our running program or process.
 - A Go Routine executes our code line-by-line.
 - To create a new thread Go routine, simply add `go` in front of the function (i.e. http.Get()).
+- **The big takeaway with Go routines is to never ever try to access the same variable from a different child routine. Wherever possible, we only share information with a child routine or a new Go routine as an argument or communicating with a child routine over a channel.** 
+- Go routines are best described as a separate line of code execution that can be used to handle blocking code. 
+
 
 ### But what goes on under the hood when implementing multiple Go routines?
 - Behind the scenes, there is something called a Go scheduler that works with one CPU on your machine. The Go scheduler runs only one routine at any given time until it finishes running a function or makes a blocking call (i.e. http.Get())
@@ -826,12 +831,160 @@
 - Channels are used to communicate inbetween different running Go routines. It is the only way to communicate between routines. We use a channel to make sure the main routine is aware of which child routine has finished running. 
 - Think of a channel as an intermediary between discussions of routines on our local machine, like text messaging channels. We can send some data to a channel and it automatically get sent to any other **running** routine that has access to that channel.
 - We can create channels as values that can be passed around. Channels are typed, just like any other variable. The information or data that we pass into a channel must all be of the same type (i.e. string, int, etc.) There would be a type error if you shared a float inside a type string or type int inside a channel.
+- The purpose of a channel is for communication between go routines.
 
 ### Sending data with channels
 - `channel <- 5`: send the value '5' into this channel 
 - `myNumber <- channel`: wait for a value to be sent into the channel. When we get one, assign the value to `myNumber`.
 - `fmt.Println(c<- channel)`: wait for the value to be sent into the channel. When we get one, log it out immediately. 
 - **Receiving messages from a channel is blocking line of code!**
+
+### Function Literal 
+- JavaScript and PHP: an anonymous function. 
+- Ruby, Python, and C#: lambda.
+- In Go, a function literal is an unnamed function that wraps a chunk of code to execute in the future.
+- Initial attempt to place Sleep statement: 
+    ```
+	// attempt to put a Sleep statement to pause the current go routine for 5 seconds in our main routine, but this Sleep statement is a blocking call and we will only receive a message and execute a new go routine once every 5 seconds. We do not want to pause the main routine, this is called throttling, which is something we don't want to occur. So where do we place the Sleep statement? We shouldn't put the Sleep statement in checkLink() because this will cause a delay in the initial GET request, which is what we don't want.
+	for l := range c {
+		time.Sleep(5 * time.Second)
+		checkLink(l, c)
+	}
+    ```
+
+- Second attempt to place `Sleep` statement, in a function literal. However, there is a Channel Gotcha that needs to be addressed. There is a warning message (or green squiggly line), `range variable l captured by func literal` if you compile following lines of code. This means that the range variable, `l`, is directly referenced in the functional literal. The range variable, `l`, is always changing, so the go routine, which references directly to `l` may change in the process of executing checkLink(). In other words, the `link` we're using to make the GET request may be different than the `link` that is being passed into the channel. This is why we get the warning message. 
+- The takeaway here is in practice, never ever reference the same variable inside two different routines, as shown in the example below, where we are referencing the range variable `l`. Instead, use Go's pass-by-value. So whenever the main routine has data we want to pass to the child routine when it's created, we have to provide all that information as an argument to the function that composes the child routine (i.e. function literal).
+- Remember when we pass a value off, that value will be copied in memory, allowing the go child routine to point to that copy instead of the range variable `l` in memory address. 
+
+    ```
+    for l := range c {
+		go func(l string) {
+			time.Sleep(5 * time.Second)
+			checkLink(l, c)
+		}(l)
+	}
+
+    func checkLink(link string, c chan string) {
+        _, err := http.Get(link) // returns a Response struct and error type, but we are only concerned about error type, which states whether or not the site is up. Not so much the response to the request.
+        if err != nil {
+            fmt.Println(link, "might be down!")
+            c <- link
+            return // make sure we don't do anything else inside the if statement
+        }
+
+        fmt.Println(link, "is up!")
+        c <- link
+    }
+    ```
+
+
+- Final solution to deal with the Sleep statement in the function literal within a for loop. We pass the data from the main routine as an argument to the function literal to create a copy of the value in memory. The child routine will then reference a copy of the value in a new memory, while the main routine will look at the range variable `l` in its separate memory address. The go child routine will access to the copy of the link in a different memory address.
+- When we receive a new message through channel c, that new value is assigned to `l`, we pass `l` to the function literal as an argument, which makes a copy of `l` in memory, and the go child routine has access to that copy, as opposed to the original value of `l`. This means that `l` can change as much as it pleases, and we don't have to worry about the go child routine to referencing that same address or same copy in memory to `l`.
+    ```
+	// alternative way to write loop: watch the channel c, whenever a value comes out of it, assign that value to l, and the body of the for loop is executed, which starts a checkLink go routine.
+	for l := range c {
+		// add a function literal (or anonymous function) to set a timer between GET requests. We initially didn't want to place it in the main routine or delay the checkLink() with a timer. We decided to use a function literal (equivalent to an anonymous fcn or lambda in Ruby), which is a block of code that runs in the future. The tricky part is making sure you pass the l argument from outside the function literal scope, when invoking the function literal. Instead of passing l directly into the function literal, which may lead to issues.
+		go func(link string) {
+			time.Sleep(5 * time.Second)
+			checkLink(link, c)
+		}(l) // extra set of parenthesis to invoke it, and pass l, which is a new copy in another memory address
+		// don't try to access the same variable from a child routine. We only share information to a child routine as an argument or from a channel
+	}
+    ```
+- We want to put the Sleep statement in a function literal. 
+
+### Channels Gotcha!
+- Code above explains a channels gotcha. 
+- But the big takeaways are as follows:
+1. **Never ever try to access the same variable from a different child routine. The big takeaway with Go routines is to never ever try to access the same variable from a different child routine. Wherever possible, we only share information with a child routine or a new Go routine we create by passing it as an argument or communicating with a child routine over channels.** 
+2. We never try to share a variables directly between go routines, which can cause unknown errors.
+
+- The following program will likely cause an error because the channel is expecting a value of type string to be sent, but a byte slice is being passed into the channel, which is not technically a string.
+    ```
+    package main
+    
+    func main() {
+    c := make(chan string)
+    c <- []byte("Hi there!")
+    }
+    ```
+
+- The following program will never exit because the program is expecting something to receive a value we're passing into the channel.
+    ```
+    package main
+ 
+    func main() {
+        c := make(chan string)
+        c <- "Hi there!"
+    }
+    ```
+
+- In the following program, there is a function literal within the main routine. The program will likely exit before a greeting is printed on the terminal. Also, because the greeting variable is referenced directly in the go routine, if we change the value of greeting, issues may occur:
+    ```
+    package main
+ 
+    import (
+    "fmt"
+    )
+    
+    func main() {
+    greeting := "Hi There!"
+    
+    go (func() {
+        fmt.Println(greeting) 
+    })()
+    }
+    ```
+
+- The following two code snippets are the same.
+    ```
+    Ignoring whether or not the program will exit correctly, are the following two code snippets equivalent?
+
+    Snippet #1
+
+    package main
+    
+    import "fmt"
+    
+    func main() {
+    c := make(chan string)
+    for i := 0; i < 4; i++ {
+        go printString("Hello there!", c)
+    }
+    
+    for s := range c {
+        fmt.Println(s)
+    }
+    }
+    
+    func printString(s string, c chan string) {
+    fmt.Println(s)
+    c <- "Done printing." 
+    }
+    
+    Snippet #2
+
+    package main
+    
+    import "fmt"
+    
+    func main() {
+    c := make(chan string)
+    
+    for i := 0; i < 4; i++ {
+        go printString("Hello there!", c)
+    }
+    
+    for {
+        fmt.Println(<- c)
+    }
+    }
+    
+    func printString(s string, c chan string) {
+    fmt.Println(s)
+    c <- "Done printing." 
+    }
+    ```
 
 ## Having trouble setting up Go? The following may be helpful.
 - Use VSCode to write Go programs. Go to extensions and install Go. It should have over 3.3 million downloads. 
