@@ -71,6 +71,8 @@
 
 ### Types in Go
 - Types need to be declared in Go. This is important for statically-typed languages, like C++, Java, and Go. Dynamically-typed languages, such as JavaScript, Ruby, and Python, does not care what values are being assigned to variables.
+- Every value has a type. 
+- Every function has to specify the type of its arguments. 
 - Variables must first be initialized with the 'var variableName type' syntax before variable can be assigned to a value. 
 - To initialize and assign variable, use ':=' operator for shorthand notation. **Use := syntax ONLY when defining a new variable!** 
     For example:
@@ -122,7 +124,7 @@
 - By creating a new type with a function that has a receiver, we are adding a 'method' to any value of that type.
 - This means that any variable of type "deck" now gets access to print method. What does "d deck" mean? d is the variable containing copy of deck that can be used within function,  If you still don't get it, in main.go, "cards" is essentially the d variable in this case. "deck" is the type that we want to attach the print() method to.
 - You can think of the receiver argument as "this" in Python or "self" in Ruby.
-- By Go convention, call receiver argument the first letter of its type. So if you're writing a receiver function for type deck, then call receiver argument, "d".
+- By Go convention, call the receiver argument, the first letter of its type. So if you're writing a receiver function for type deck, then call receiver argument, "d".
 - For example, this should print "Harry Potter". "b" represents the value of type "book": 
     ```
         package main
@@ -331,7 +333,7 @@
 ## Go is a pass-by-value language. But what does that mean?
 - **Whenever we pass a value into a fcn, either as a receiver or as an argument, Go copies that value in memory, and then the copy is made available inside the fcn. This means that the fcn by default will always work with a copy of the data structure.** 
 - However, you can modify the actual underlying data structure through the use of pointers and memory addresses. 
-- In the example below, when you pass the name "jim" into updateName(), Go first made a copy of that struct, and then the copy was made available to the updateName fcn. This meant that changes to the name did not propagate to the original "jim" struct. 
+- In the example below, when you pass the name `jim` into `updateName()`, Go first makes a copy of that struct, and then the copy is made available to `updateName()`. This meant that changes to the name did not propagate to the original `jim struct`. 
 
     ```
     package main
@@ -677,6 +679,124 @@
 - So if you don't know what the collection of keys or values are going to be at compile time, then you have a great use case for a map. But if you know that you're always going to be working with certain keys or properties, then you would want to use a struct. 
 
 
+## Interfaces!!!...um, what are they? 
+- Interfaces are not generic types. Unlike C# or Java which has access to generic types, Go does not have generic types. Interfaces are not replacements for generic types. Not sure what generic types are...
+- Interfaces are 'implicit', meaning we don't have to explicitly define which custom types (i.e. type englishBot, spanishBot) satisfy an interface (i.e.`type bot interface`). 
+
+### What do you mean by "satisfy" an interface? 
+- A type satisfies an interface when the type implements all the functions contained in the interface definition.
+
+- Interfaces are about helping reuse code, or form a contract to help us manage types. Lets be clear, interfaces are not used to make sure your code is running correctly, or some built-in test. If some custom logic written in a function is broken, then interfaces won't help.
+- Writing your own interfaces is tough and requires experience. Step 1 is to undertand how to read them in the standard lib documentation. 
+- You can write 1000's of lines of Go code without worrying about writing your own interfaces. Interfaces are not a requirement of writing Go language. Although it's highly recommended for code clarity and quality.
+
+- Example of interface syntax
+    ```
+    interface syntax
+    type interfaceName interface {
+        getGreeting(input list of argument types) (input list of return types)
+    }
+
+    i.e.
+    type bot interface {
+        getGreeting(string, int) (string, error)
+    }
+    ```
+
+- Another purpose of using interface (i.e. Reader) is to provide a common output (i.e. []byte) for all different sources of data inputs (i.e. text file, image file, HTTP request body, data from analog sensor, etc). This means that all the different source of inputs can implement the Reader interface.
+
+- **Concrete types** are types that can create a value: map, struct, int, string, `englishBot` (from custom example). You can create a value of type `englishBot`, int, string, etc. But you cannot create a value of type `bot`, because it is of type `interface`.
+- **Interface type**: `bot` (from custom example). You cannot create a value directly out of interface type.
+
+- In the following program, `square` satisfies the `shape` interface because square defines the `area` function and returns an `int`.
+    ```
+    type shape interface {
+        area() int
+    }
+    
+    type square struct {
+        sideLength int
+    }
+    
+    func (s square) area() int {
+        return s.sideLength * s.sideLength
+    }
+    
+    func printArea(s shape) {
+        fmt.Println(s.area())
+    }
+    ```
+
+- In the following program, `rectangle` type does not satisfy the `shape` interface because `rectangle's` version of the `area` function returns a `float64`, but the `shape` interface expects a return type of `int`.
+    ```
+    type shape interface {
+        area() int
+    }
+    
+    type square struct {
+        sideLength int
+    }
+    
+    type rectangle struct {
+        height float64
+        width float64
+    }
+    
+    func (s square) area() int {
+        return s.sideLength * s.sideLength
+    }
+    
+    func (r rectangle) area() float64 {
+        return r.height * r.width
+    }
+    
+    func printArea(s shape) {
+        fmt.Println(s.area())
+    }
+    ```
+
+- In the following program, type `square` appears to successfully implement the `shape` interface, but the implementation of `square's` `area` function looks broken - it always returns a value of 10 no matter what the side length of the `square` is. The `shape` interface will not do anything to help us catch this error. Interfaces are only used to help with types. We can still easily write code that does something completely wrong.
+    ```
+    type shape interface {
+        area() int
+    }
+    
+    type square struct {
+        sideLength int
+    }
+    
+    type rectangle struct {
+        height float64
+        width float64
+    }
+    
+    func (s square) area() int {
+        return s.sideLength * s.sideLength
+    }
+    
+    func (r rectangle) area() float64 {
+        return r.height * r.width
+    }
+    
+    func printArea(s shape) {
+        fmt.Println(s.area())
+    }
+    ```
+
+- Imagine that you ask a coworker to create a new type that implements the Reader interface to take data from a text file and print it on the screen. They present you with the following code. They say that this code successfully compiled, so it must be correct. You then review their code and give them feedback. I would say that while the `textFileReader` type conforms to the requirements of the `Reader` interface, it doesn't implement the desired behavior of reading the file from a hard drive. 
+    ```
+    type textFileReader struct {}
+    
+    func (textFileReader) Read(bs []byte) (int, error) {
+        return "Information from a text file"
+    }
+    ```
+
+- Take a look at the type File inside the os package here: https://golang.org/pkg/os/#File. Does the File type satisfy both the Reader and Writer interfaces? Yes, because the `File` type defines the `Read` function for the `Reader` interface and `Write` function for the `Writer` interface. 
+
+
+## Read and Write in Go 
+- Types that implement the Reader interface are generally used to read information from an outside data source into our application.
 
 ## Having trouble setting up Go? The following may be helpful.
 - Use VSCode to write Go programs. Go to extensions and install Go. It should have over 3.3 million downloads. 
