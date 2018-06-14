@@ -335,7 +335,7 @@
 ## Go is a pass-by-value language. But what does that mean?
 - **Whenever we pass a value into a fcn, either as a receiver or as an argument, Go copies that value in memory, and then the copy is made available inside the fcn. This means that the fcn by default will always work with a copy of the data structure.** 
 - However, you can modify the actual underlying data structure through the use of pointers and memory addresses. 
-- In the example below, when you pass the name `jim` into `updateName()`, Go first makes a copy of that struct, and then the copy is made available to `updateName()`. This meant that changes to the name did not propagate to the original `jim struct`. 
+- In the example below, when you pass the name `jim` into `updateName()`, Go first makes a copy of that struct, and then the copy is made available to `updateName()`. This means that changes to `firstName` does not propagate to the original `jim struct`. 
 
     ```
     package main
@@ -418,14 +418,17 @@
             },
         }
 
-        // Use `&` operator to turn &jim into a memory address, or pointer, and assign it to jimPointer, the variable, jim, is located, and store in jimPointer. As a result, jimPointer is pointing to the memory address that the jim struct is located, not the value, jim. In short, jimPointer is pointing to a type person, or *person.
+        // Use `&` operator to turn &jim into a memory address, or pointer, and assign it to jimPointer. As a result, jimPointer contains the memory address where `jim struct` is located, not the value, jim. In short, jimPointer is pointing to a type person, or *person.
+
         jimPointer := &jim
         // fmt.Println(jimPointer)
+
         jimPointer.updateName("jimmy")
         jim.print()
     }
 
-    // pointerToPerson is the memory address that "jim" is located at. This gives direct access to the value that is stored in that memory address, which is jim struct.
+    // pointerToPerson is the memory address that "jim" is located at. This gives direct access to the value that is stored in that memory address, which is `jim struct`.
+
     func (pointerToPerson *person) updateName(newFirstName string) {
         (*pointerToPerson).firstName = newFirstName
     }
@@ -603,17 +606,18 @@
 
     // create a map with keys and values as strings
     func main() {
+        // first method to create a map
+        // colors := map[string]string{
+        // 	"red":   "#ff0000",
+        // 	"green": "00ff00",
+        // }
+        
         // second method to create a map
         // var colors map[string]string
 
         // third method to create an empty map with no key value pairs inside
         colors := make(map[int]string)
 
-        // first method to create a map
-        // colors := map[string]string{
-        // 	"red":   "#ff0000",
-        // 	"green": "00ff00",
-        // }
 
         // to add a key-val pair to empty map
         colors[10] = "#ffffff"
@@ -819,7 +823,7 @@
 - There is a main Go routine, and child Go routines. When we launch the Go program, we are creating a main Go routine. All other Go routines using the `go` keyword are considered child Go routines, and do not have the same level of "respect" as the main Go routine.
 - Only use `go` keyword in front of function calls! 
 
-###Concurrency is not parallelism
+### Concurrency is not parallelism
 - Concurrency means we can load up (or schedule) multiple Go routines at a time. Our program has the ability to run different Go routines, and change between them, kind of at the same time (or on the fly) with the help of the Go scheduler.
 - Concurrency means we can have multiple threads executing code. If one thread blocks, then another Go routine is picked up and worked on.
 
