@@ -33,7 +33,7 @@
 - Add `--help` or `-h` to a command to get help. Some commands will not have help. In this case, you can use `man pages`.
 - Search on man pages using `man -k <INSERT SEARCH TERM>`.
 
-### Part 3 RECAP 
+### Part 3 RECAP
 
 - Man is the command used to display the documentation that is build into the Linux system.
 - The $PATH controls your search path, and can determine which commands get executed. Use `which <INSERT COMMAND>` command to learn full path to a command.
