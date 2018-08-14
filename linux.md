@@ -1,7 +1,48 @@
-
 # Linux
 
-## Part 3
+### Part 5: ls Command 
+
+- `-rw-r--r--  1 vuo5583  staff   1204 Aug 13 12:21 network.tf`. First set are the permissions, second is the number of links to that file or directory. Third is the owner of the file, fourth is what group the file belongs, fifth is size of the file, sixth is the last time the file was modified, and lastly, is the filename itself.
+- `ls -a` to show hidden files.
+- `ls -l -a` = `ls -la` = `ls -al` shows the long listing output that includes hidden files. `l` stands for long listing output, and `a` stands for all files.
+- `ls -F` reveals file types. If it ends in `/`, then it's a directory, `@` is a link, and `*` is an executable.
+- Symbolic link (or symlink) is a pointer to the actual file or directory. A symlink can be used to create shortcuts for long file or directory names, or to indicate the current version of software.
+- `ls -lF` displays the long listing output with file.
+- `ls -t` to list files by time.
+- `ls -r` to list files in reverse order. `ls -l` sorts the list by name in order. 
+- `ls -latr` long listing including all files reversed sorted by time.
+
+### Permissions
+
+- `-rw-r--r--`. The first character in permission string reveals file type. For example `-` is a regular file, `d` is directory, and `l` is a symbolic link.
+- If you have read permissions (`r`), you can run `cat` on the file. If you have write permissions, you can modify its contents.
+- Permissions with directories are slightly different than permissions with files.
+    - Read to a directory means you can see the file names in the directory. If you don't have read permissions to a directory, you won't be able to see directory's content.
+    - Write to a directory allows entires to be modified within the directory. So you can edit files that are in the directory.
+    - Execute allows you to see metadata of the files in the directory, such as modification dates, owner, and group information. Similar to what you would see in a `ls -l` long listing output.
+
+## Part 4: Directories
+
+### Executing Commands
+
+- Remember that `$PATH` determines the command search path. This means that the `$PATH` environment variable is where the shell will look for commands.
+- **You can execute a command with a full path, or execute a command not within `$PATH` environment variable.** For example, `/home/jason/my-cat/cat` will run a different `cat` command because said directory is not within `echo $PATH`.
+- `./command` = Executes command in current directory.
+- `cat sales.data` is the same as typing the full path, `/bin/cat sales.data`, assuming that `which cat` shows that `cat` is located in `/bin/cat`.
+- `mkdir` creates a directory. `-p` is optional and stands for parents. This means that if you enter `mkdir -p 1/2/3`, then 3 directories are made with one command.
+- `rmdir` only removes empty directories, with no file contents.
+- `rm -rf <directory_name>` will recursively delete all the files and directories in that directory and below that directory.
+- In Linux command line, there is no undo, there is no trash can to retrieve a file that you've deleted. When you delete something, it's gone.
+
+
+### Directories
+
+- `.` represents current directory, the current directory (i.e. `./runPublisher.sh`, where `.` means this directory, `/` is the directory separator)
+- `..` is the parent directory of the current directory
+- `cd -` then you'll be placed in your previous directory. For example, you can `echo $OLDPWD` to see the previously directory you were in, then `cd -` to enter that previous directory.
+- `/` is the directory separator (forward slash). For example, if you `cd /home/George`, that's the same thing as running `cd /home/George/`.
+
+## Part 3: Environment Variables
 
 ### Basic Linux Commands
 
@@ -24,7 +65,7 @@
 
 ### PATH Environment Variable
 
-- env variables store information (i.e. `PATH` is an environment variable). Knowing the `PATH` env variable gives you an idea of where commands are located on the Linux system.
+- env variables store information (i.e. `$PATH` or `$OLDPWD` is an environment variable). Knowing the `$PATH` env variable gives you an idea of where commands are located on the Linux system.
 - PATH controls the command search path, meaning that when you type in a command in the prompt, that command will be searched for in the directories that are listed in your path environment variable. For example, type `echo $PATH` to provide a list of directories separated by a colon. `/usr/local/bin` will be searched first. If command is found there, it will be executed. If command is not found, then the next directory will be searched. If all the directories in the environment variable have been searched, then `command not found` is returned in the prompt.
 - stores location that has a name and a value as a pair.
 - typically uppercase
@@ -32,6 +73,7 @@
 - If you want to know the full path to the command you are executing, use the `which` command (i.e. `which cat`). If there are multiple programs named `cat`, then the one that gets executed is the one that appears first during the command search in the environment variable. (i.e. `which tac` displays the files contents in reverse order).
 - Add `--help` or `-h` to a command to get help. Some commands will not have help. In this case, you can use `man pages`.
 - Search on man pages using `man -k <INSERT SEARCH TERM>`.
+- `echo $OLDPWD` environment variable holds the old directory you were previously in.
 
 ### Part 3 RECAP
 
@@ -39,7 +81,7 @@
 - The $PATH controls your search path, and can determine which commands get executed. Use `which <INSERT COMMAND>` command to learn full path to a command.
 - You can `cd` into any search paths from whatever path you're currently on (i.e. `echo $PATH` to show search paths, then `cd /bin` or `cd /usr/local/bin`)
 
-## Part 2
+## Part 2: Shell 
 
 ### What is the Shell?
 
@@ -92,9 +134,7 @@
 - Shell prompts can vary greatly in appearance.
 - Root is the superuser.
 
-
-
-## Part 1
+## Part 1: Linux OS
 
 - An OS is a collection of software that manages hardware resources and provides an environment where applications run. 
 - For example, the OS allows applications to store information, send documents to printers, interact with users.

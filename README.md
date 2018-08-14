@@ -2,7 +2,7 @@ This repo previously stored terminal games generated while I was learning Ruby i
 
 If you'd like to contribute by imparting your knowledge on specific concepts and fundamentals, or feel inclined to make a correction to statements in the docs, please make a pull request, or email. I welcome contributions.
 
-### Table of Contents
+# Table of Contents
 - [Golang](https://github.com/gevuong/study-guide/blob/master/go.md)
 - [Linux](https://github.com/gevuong/study-guide/blob/master/linux.md)
 - [Data Structure](https://github.com/gevuong/Study-Guide/blob/master/data_structures.md)
