@@ -1,8 +1,58 @@
 # Linux
 
-### Part 5: ls Command 
+## Part 6: Groups and Permissions
 
-- `-rw-r--r--  1 vuo5583  staff   1204 Aug 13 12:21 network.tf`. First set are the permissions, second is the number of links to that file or directory. Third is the owner of the file, fourth is what group the file belongs, fifth is size of the file, sixth is the last time the file was modified, and lastly, is the filename itself.
+- New files created are auto set to your primary group.
+- `chgrp` command changes the group. For example `chgrp sales sales.data` will change group of `sales.data` file to `sales`.
+- `chmod g+w sales.data`
+
+### Change Permission Commands
+
+- Permissions are also known as modes. `chmod` is the command to and is short for "change mode". For example, `chmod g+w sales.data`. This will add write permission to group. To undo or remove that permission, `chmod g-w sales.data`. Another example to change permission to multiple categories in one command, `chmod u=rwx, g=rx, o= sales.data`. If you don't specify a permission after the equal sign, then all permissions are removed from that category (i.e. other group in previous example). `a=r sales.data` will set all categories to read.
+- `ugoa` represents the 4 different permission categories.
+- `+-=` is to add, subtract, or set permissions.
+- `rwx` is read, write, execute.
+
+- Numeric based permissions are always in read, write, execute order. And user group category is always in user, group, other order.
+- To get a number to use with `chmod`, convert binary to base 10 or decimal. Read=4, write=2, execute=1.
+- If r,w,x are all set to off, the binary representation is `000`. If you omit the write permission, then binary is `101`.
+- For example, symbolic `-rwx------` or octal `700` means only user has `rwx` access to the file, and no one else.
+- Another example: symbolic `-rwxr-xr-x` or octal `755` means everybody on the system can execute the file, but only the user or owner can edit that file.
+- Third example: symbolic `-rw-rw----` or octal `660` allows only the user and members of the group to read and edit that file, and does not let others read it.
+- In general its best to avoid `777` or `666` permission modes.
+
+- Octal mode has 8 possible values from 0 to 7.
+- Octal | Binary | String | Description
+-   0   |   0    |   ---  | no permissions
+-   1   |   1    |   --x  | execute only
+-   2   |   10   |   -w-  | write only
+-   3   |   11   |   -wx  | write and execute (2+1)
+-   4   |   100  |   r--  | read only 
+-   5   |   101  |   r-x  | read and execute (4+1)
+-   6   |   110  |   rw-  | read and write (4+2)
+-   7   |   111  |   rwx  | read, write, and execute (4+2+1)
+
+### Permissions and Groups
+
+- `-rw-r--r--`. **The first character in permission string reveals file type.** For example `-` is a regular file, `d` is directory, and `l` is a symbolic link.
+- If you have read permissions (`r`), you can run `cat` on the file. If you have write permissions, you can modify its contents.
+- Permissions with directories are slightly different than permissions with files.
+    - Read to a directory means you can see the file names in the directory. If you don't have read permissions to a directory, you won't be able to see directory's content.
+    - Write to a directory allows entires to be modified within the directory. So you can edit files that are in the directory.
+    - Execute allows you to see metadata of the files in the directory, such as modification dates, owner, and group information. Similar to what you would see in a `ls -l` long listing output.
+
+- Permission categories: `User, Group, Other, All`, are represented by symbols `u, g, o, a`, respectively.
+- `u` represents the user that owns the file.
+- The users in the files group are represented by `g`.
+- `o` represents user that is not the owner or in the files group, are considered `other`.
+- `a` represents all, or everybody.
+
+- Every user is in at least one group. Users can belong to many groups. Groups are used to organize users.
+- Run `groups` or `id -Gn` to see what groups you are a member of. Or run `groups <insert another user>` to see which groups that user belongs to.
+
+## Part 5: ls Command
+
+- `-rw-r--r--  1 vuo5583  staff   1204 Aug 13 12:21 network.tf`. First set are the permissions, second is the number of links to that file or directory. **third is the owner of the file, fourth is what group the file belongs**, fifth is size of the file, sixth is the last time the file was modified, and lastly, is the filename itself.
 - `ls -a` to show hidden files.
 - `ls -l -a` = `ls -la` = `ls -al` shows the long listing output that includes hidden files. `l` stands for long listing output, and `a` stands for all files.
 - `ls -F` reveals file types. If it ends in `/`, then it's a directory, `@` is a link, and `*` is an executable.
@@ -11,15 +61,6 @@
 - `ls -t` to list files by time.
 - `ls -r` to list files in reverse order. `ls -l` sorts the list by name in order. 
 - `ls -latr` long listing including all files reversed sorted by time.
-
-### Permissions
-
-- `-rw-r--r--`. The first character in permission string reveals file type. For example `-` is a regular file, `d` is directory, and `l` is a symbolic link.
-- If you have read permissions (`r`), you can run `cat` on the file. If you have write permissions, you can modify its contents.
-- Permissions with directories are slightly different than permissions with files.
-    - Read to a directory means you can see the file names in the directory. If you don't have read permissions to a directory, you won't be able to see directory's content.
-    - Write to a directory allows entires to be modified within the directory. So you can edit files that are in the directory.
-    - Execute allows you to see metadata of the files in the directory, such as modification dates, owner, and group information. Similar to what you would see in a `ls -l` long listing output.
 
 ## Part 4: Directories
 
