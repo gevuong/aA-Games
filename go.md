@@ -10,18 +10,15 @@
 - supports concurrency, meaning Go can take full advantage of multi-core computer processors
 - supports garbage collection, which means Go automatically frees unused memory rather than explicitly writing code to free memory.
 
-
 ### Hm, ok, Go sounds pretty awesome about now, but when would I want to use Go?
 - web services, since Go can handle a lot of operations at once. 
 - any host that allows binary executables, like most commercial web hosts.
 - supported by Google App Engine, which gives you an easy way to deploy and scale web apps.
 
-
 ### What does Go not have?
 - Go is not an object-oriented programming language like Ruby, Python, or Java. So there's no idea of classes, or class inheritance. Instead, you create custom type declarations or use existing ones, and extend its functionality. This is the key difference between OOP approach and Go's approach.
 - no exceptions
 - no function overloading, meaning you cannot create multiple versions of a fcn with different parameters.
-
 
 ## Ok. With this bit of context, are you ready to, Go? If so, continue on.
 

@@ -1,5 +1,11 @@
 # Linux
 
+## Part 7: Finding Files and Directories 
+
+- `find [path] [expression]` recursively find files in path that match expression. If no arguments are provided it finds all files in current directory and its subdirectories.
+- 
+
+
 ## Part 6: Groups and Permissions
 
 - New files created are auto set to your primary group.
